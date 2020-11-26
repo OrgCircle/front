@@ -1,7 +1,7 @@
 <template>
   <div class="home">
     <v-container class="full-screen-centered">
-      <register />
+      <register-form />
     </v-container>
   </div>
 </template>

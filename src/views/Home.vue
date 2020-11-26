@@ -2,6 +2,7 @@
   <div class="home">
     <v-container class="full-screen-centered">
       <login-form />
+      <a :to="Register">Inscription</a>
     </v-container>
   </div>
 </template>
@@ -22,5 +23,6 @@ export default {
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-direction: column;
 }
 </style>
