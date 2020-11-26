@@ -24,6 +24,22 @@
             xs="12"
           >
             <v-text-field 
+              v-model="formValues.familyName"
+              label="Nom de la famille"
+              :rules="nameRules"
+              required
+              outline
+              dense
+            />
+          </v-col>
+        </v-row>
+        <v-row>
+          <v-col
+            md="6 "
+            sm="8"
+            xs="12"
+          >
+            <v-text-field 
               v-model="formValues.name"
               label="Nom"
               :rules="nameRules"
@@ -43,6 +59,21 @@
               v-model="formValues.password"
               label="Mot de passe"
               :rules="passwordRules"
+              type="password"
+              required
+              outline
+              dense
+            />
+          </v-col>
+          <v-col
+            md="6"
+            sm="8" 
+            xs="12"
+          >
+            <v-text-field 
+              v-model="formValues.passwordSame"
+              label="Répéter le mot de passe"
+              :rules="passwordSameRules"
               type="password"
               required
               outline
@@ -75,13 +106,20 @@ export default {
         passwordRules: [
           v => !!v || 'Le mot de passe est requis.'
         ],
+        passwordSameRules: [
+          v => !!v || 'La répétition du mot de passe est requis.',
+          v => v === this.formValues.password || 'Les deux mot de passe doivent être identique.'
+        ],
         nameRules: [
-          v => !!v || 'Le nom est requis.'
+          v => !!v || 'Le nom est requis.',
+          v => v.length > 1 || 'Le nom de famille est trop court.'
         ],
         formValues: {
             email: '',
             name: '',
-            password: ''
+            familyName: '',
+            password: '',
+            passwordSame: ''
         }
       }
   },
@@ -89,10 +127,8 @@ export default {
     submitConnexion () {
       if (this.$refs.form.validate()) {
         alert("Le formulaire est valide.")
-        this.$axios.post('/auth/login', this.formValues).then((response) => {
+        this.$axios.post('/auth/register', this.formValues).then((response) => {
           alert("Le call API c'est bien passé.")
-          console.log(response)
-          this.$store.setFamily(response.data.family)
         }).catch((e) => {
           console.log(e)
         })
