@@ -1,5 +1,12 @@
 <template>
     <v-container>
+      <div class="d-flex flex-column justify-center align-center">
+        <v-img 
+          lazy-src="../assets/logo.png"
+          max-width="100"
+          src="../assets/logo.png"
+        />
+      </div>
       <v-form ref="form">
         <v-row justify="center">
           <v-col 
@@ -11,6 +18,22 @@
               v-model="formValues.email"
               label="Email"
               :rules="emailRules"
+              required
+              outline
+              dense
+            />
+          </v-col>
+        </v-row>
+        <v-row>
+          <v-col
+            md="6 "
+            sm="8"
+            xs="12"
+          >
+            <v-text-field 
+              v-model="formValues.name"
+              label="Nom"
+              :rules="nameRules"
               required
               outline
               dense
@@ -49,7 +72,7 @@
 
 <script>
 export default {
-  name: 'Login',
+  name: 'LoginForm',
   data: () => {
       return {
         emailRules: [
@@ -59,8 +82,12 @@ export default {
         passwordRules: [
           v => !!v || 'Le mot de passe est requis.'
         ],
+        nameRules: [
+          v => !!v || 'Le nom est requis.'
+        ],
         formValues: {
             email: '',
+            name: '',
             password: ''
         }
       }
@@ -72,6 +99,7 @@ export default {
         this.$axios.post('/auth/login', this.formValues).then((response) => {
           alert("Le call API c'est bien passé.")
           console.log(response)
+          this.$store.setFamily(response.data.family)
         }).catch((e) => {
           console.log(e)
         })

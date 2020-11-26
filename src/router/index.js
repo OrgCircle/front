@@ -7,9 +7,6 @@ const routes = [
   {
     path: '/',
     name: 'Home',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
     component: () => import(/* webpackChunkName: "home" */ '../views/Home.vue')
   }
 ]
@@ -19,7 +16,9 @@ const router = new VueRouter({
 })
 
 router.beforeEach((to, from, next) => {
-  if (to.name !== 'Home' && !sessionStorage.getItem('isAuthentificated')) next({ name: 'Home' })
+  console.log(router)
+  console.log(to) 
+  if (to.name !== 'Home') next({ name: 'Home' })
   else next()
 })
 

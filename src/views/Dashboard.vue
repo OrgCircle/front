@@ -1,16 +1,13 @@
 <template>
   <div class="home">
     <v-container class="full-screen-centered">
-      <login-form />
     </v-container>
   </div>
 </template>
 
 <script>
-import LoginForm from '@/components/loginForm'
 export default {
-  name: 'Home',
-  components: { LoginForm }
+  name: 'Dashboard'
 }
 </script>
 

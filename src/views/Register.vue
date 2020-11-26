@@ -1,16 +1,16 @@
 <template>
   <div class="home">
     <v-container class="full-screen-centered">
-      <login-form />
+      <register />
     </v-container>
   </div>
 </template>
 
 <script>
-import LoginForm from '@/components/loginForm'
+import RegisterForm from '@/components/registerForm'
 export default {
-  name: 'Home',
-  components: { LoginForm }
+  name: 'Register',
+  components: { RegisterForm }
 }
 </script>
 

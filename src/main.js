@@ -10,11 +10,7 @@ Vue.config.productionTip = false
 Vue.use(
   {
     install (Vue) {
-      Vue.prototype.$axios = Axios.create(
-        {
-          baseURL: 'http://localhost:5000/api',
-        }
-      )
+      Vue.prototype.$axios = Axios.create()
     }
   }
 )
@@ -23,5 +19,7 @@ new Vue({
   router,
   vuetify,
   store,
+  beforeMount: () => {
+  },
   render: h => h(App)
 }).$mount('#app')

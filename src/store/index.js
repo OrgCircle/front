@@ -5,7 +5,7 @@ Vue.use(Vuex);
 
 export let store = new Vuex.Store({
     state: {
-        family: {}
+        family: null
     },
     mutations: {
         setFamily(family) {
