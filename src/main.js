@@ -6,7 +6,18 @@ import store from '@/store'
 import Axios from 'axios'
 
 Vue.config.productionTip = false
-Vue.prototype.$axios = Axios
+
+Vue.use(
+  {
+    install (Vue) {
+      Vue.prototype.$axios = Axios.create(
+        {
+          baseURL: 'http://localhost:5000/api',
+        }
+      )
+    }
+  }
+)
 
 new Vue({
   router,

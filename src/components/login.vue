@@ -34,7 +34,7 @@
             />
           </v-col>
         </v-row>
-        <v-row justify="center">
+        <v-row d-flex justify="center">
           <v-col cols="6" sm="8" xs="12">
             <v-btn
               @click="submitConnexion"
@@ -48,7 +48,6 @@
 </template>
 
 <script>
-
 export default {
   name: 'Login',
   data: () => {
@@ -70,6 +69,12 @@ export default {
     submitConnexion () {
       if (this.$refs.form.validate()) {
         alert("Le formulaire est valide.")
+        this.$axios.post('/auth/login', this.formValues).then((response) => {
+          alert("Le call API c'est bien passé.")
+          console.log(response)
+        }).catch((e) => {
+          console.log(e)
+        })
       }
     }
   }
