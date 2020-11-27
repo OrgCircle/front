@@ -127,7 +127,7 @@ export default {
     submitConnexion () {
       if (this.$refs.form.validate()) {
         alert("Le formulaire est valide.")
-        this.$axios.post('/auth/register', this.formValues).then((response) => {
+        this.$axios.post('/auth/register', this.formValues).then(() => {
           alert("Le call API c'est bien passé.")
         }).catch((e) => {
           console.log(e)
