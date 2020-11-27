@@ -124,11 +124,10 @@ export default {
     async submitInscription () {
       if (this.$refs.form.validate()) {
         try {
-          const response = await this.register(this.formValues);
-          console.log(response)
+          await this.register(this.formValues);
         }
         catch (e) {
-          console.log(e)
+          console.log(e);
         }
       }
     },

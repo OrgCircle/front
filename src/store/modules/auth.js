@@ -1,3 +1,7 @@
+import Service from '../../helpers/services';
+const NAMESPACE = 'auth';
+let service = new Service(NAMESPACE);
+
 export default {
   namespaced: true,
 
@@ -20,29 +24,34 @@ export default {
   mutations: {
     SET_FAMILY (state, payload) {
       state.family = payload.family;
-      if (state.family !== null) state.isAuthenticated = true;
     },
     SET_PROFIL (state, payload) {
-      state.profil = payload.profil;
+      state.profil = {
+        id: payload._id,
+        name: payload.name,
+      };
+      if (state.profil !== null) state.isAuthenticated = true;
     },
     ABLE_CREATE_FAMILY (state) {
       state.createFamily = true
+    },
+    LOGIN (state, payload) {
+      localStorage.setItem('jwt', payload)
     }
   },
 
   actions: {
     async getFamily({ commit }) {
-      const payload = await this.axios.$get("/api/account/infos");
-      commit("SET_FAMILY", payload);
+      const response = await this.axios.get("/account/infos");
+      commit("SET_FAMILY", response);
     },
     async login ({ commit }, data) {
-      const payload = await this.axios.$post("/api/login", data);
-      commit("SET_PROFIL", payload);
+      const response = await service.post("/login", '', data);
+      commit("LOGIN", response.data.token)
+      commit("SET_PROFIL", response.data);
     },
     async register({ commit }, data) {
-      console.log(data)
-      console.log(this)
-      const response = await this.axios.$post("/api/register", data);
+      const response = await service.post("/auth/register", data);
       if (response.status === 201) commit('ABLE_CREATE_FAMILY')
       return response;
     }

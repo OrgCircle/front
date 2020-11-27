@@ -38,7 +38,7 @@
           xs="12"
         >
           <v-text-field 
-            v-model="formValues.name"
+            v-model="formValues.username"
             label="Nom"
             :rules="nameRules"
             required
@@ -83,38 +83,44 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex'
+
 export default {
   name: 'LoginForm',
-  data: () => {
-      return {
-        emailRules: [
-          v => !!v || 'L\'email est requis.',
-          v => /^(([^<>()[\]\\.,;:\s@']+(\.[^<>()\\[\]\\.,;:\s@']+)*)|('.+'))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(v) || 'L\'email doit être valide.'
-        ],
-        passwordRules: [
-          v => !!v || 'Le mot de passe est requis.'
-        ],
-        nameRules: [
-          v => !!v || 'Le nom est requis.'
-        ],
-        formValues: {
-            email: '',
-            name: '',
-            password: ''
-        }
-      }
+  data: function () {
+    return {
+      emailRules: [
+        v => !!v || 'L\'email est requis.',
+        v => /^(([^<>()[\]\\.,;:\s@']+(\.[^<>()\\[\]\\.,;:\s@']+)*)|('.+'))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(v) || 'L\'email doit être valide.'
+      ],
+      passwordRules: [
+        v => !!v || 'Le mot de passe est requis.'
+      ],
+      nameRules: [
+        v => !!v || 'Le nom est requis.'
+      ],
+      formValues: this.initEmptyForm()
+    }
   },
   methods: {
-    submitConnexion () {
+    ...mapActions('auth', ['login']),
+    async submitConnexion () {
       if (this.$refs.form.validate()) {
-        alert("Le formulaire est valide.")
-        this.$axios.post('/auth/login', this.formValues).then((response) => {
-          alert("Le call API c'est bien passé.")
-          console.log(response)
-          this.$store.setFamily(response.data.family)
-        }).catch((e) => {
-          console.log(e)
-        })
+        try {
+          await this.login(this.formValues);
+          console.log(this)
+          this.$router.push({name: 'Dashboard'});
+        }
+        catch (e) {
+          console.log(e);
+        }
+      }
+    },
+    initEmptyForm () {
+      return {
+        email: '',
+        username: '',
+        password: '',
       }
     }
   }
