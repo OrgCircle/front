@@ -1,10 +1,10 @@
 <template>
     <v-container>
       <v-form ref="form">
-        <v-row justify="center">
+        <v-row>
           <v-col 
             md="6 "
-            sm="8"
+            sm="12"
             xs="12"
           >
             <v-text-field 
@@ -20,7 +20,7 @@
         <v-row>
           <v-col
             md="6 "
-            sm="8"
+            sm="12"
             xs="12"
           >
             <v-text-field 
@@ -36,7 +36,7 @@
         <v-row>
           <v-col
             md="6 "
-            sm="8"
+            sm="12"
             xs="12"
           >
             <v-text-field 
@@ -52,7 +52,7 @@
         <v-row>
           <v-col
             md="6"
-            sm="8" 
+            sm="12" 
             xs="12"
           >
             <v-text-field 
@@ -67,7 +67,7 @@
           </v-col>
           <v-col
             md="6"
-            sm="8" 
+            sm="12" 
             xs="12"
           >
             <v-text-field 
@@ -81,12 +81,12 @@
             />
           </v-col>
         </v-row>
-        <v-row d-flex justify="center">
-          <v-col cols="6" sm="8" xs="12">
+        <v-row>
+          <v-col cols="6" sm="12" xs="12">
             <v-btn
-              @click="submitConnexion"
+              @click="submitInscription"
             >
-              Connexion
+              Inscription
             </v-btn>
           </v-col>
         </v-row>
@@ -95,9 +95,11 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex'
+
 export default {
-  name: 'LoginForm',
-  data: () => {
+  name: 'RegsiterForm',
+  data: function () {
       return {
         emailRules: [
           v => !!v || 'L\'email est requis.',
@@ -114,24 +116,29 @@ export default {
           v => !!v || 'Le nom est requis.',
           v => v.length > 1 || 'Le nom de famille est trop court.'
         ],
-        formValues: {
-            email: '',
-            name: '',
-            familyName: '',
-            password: '',
-            passwordSame: ''
-        }
-      }
+        formValues: this.initEmptyForm()
+      };
   },
   methods: {
-    submitConnexion () {
+    ...mapActions('auth', ['register']),
+    async submitInscription () {
       if (this.$refs.form.validate()) {
-        alert("Le formulaire est valide.")
-        this.$axios.post('/auth/register', this.formValues).then(() => {
-          alert("Le call API c'est bien passé.")
-        }).catch((e) => {
+        try {
+          const response = await this.register(this.formValues);
+          console.log(response)
+        }
+        catch (e) {
           console.log(e)
-        })
+        }
+      }
+    },
+    initEmptyForm () {
+      return {
+        email: '',
+        name: '',
+        familyName: '',
+        password: '',
+        passwordSame: ''
       }
     }
   }

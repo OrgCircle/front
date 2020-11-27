@@ -1,8 +1,11 @@
 <template>
   <div class="home">
     <v-container class="full-screen-centered">
-      <login-form />
-      <a :to="Register">Inscription</a>
+      <v-row>
+        <v-col>
+          <login-form />
+        </v-col>
+      </v-row>
     </v-container>
   </div>
 </template>
@@ -20,9 +23,5 @@ export default {
   padding: 0px;
   width: 100vw;
   height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
 }
 </style>

@@ -1,73 +1,85 @@
 <template>
-    <v-container>
-      <div class="d-flex flex-column justify-center align-center">
-        <v-img 
-          lazy-src="../assets/logo.png"
-          max-width="100"
-          src="../assets/logo.png"
-        />
-      </div>
-      <v-form ref="form">
-        <v-row justify="center">
-          <v-col 
-            md="6 "
-            sm="8"
-            xs="12"
+  <v-container>
+    <v-form ref="form">
+      <v-row>
+        <v-col 
+          md="6 "
+          sm="12"
+          xs="12"
+        >
+          <v-img 
+            lazy-src="@/assets/logo.png"
+            max-width="100"
+            src="../assets/logo.png"
+          />
+        </v-col>
+      </v-row>
+      
+      <v-row>
+        <v-col 
+          md="6 "
+          sm="12"
+          xs="12"
+        >
+          <v-text-field 
+            v-model="formValues.email"
+            label="Email"
+            :rules="emailRules"
+            required
+            outline
+            dense
+          />
+        </v-col>
+      </v-row>
+      <v-row>
+        <v-col
+          md="6 "
+          sm="12"
+          xs="12"
+        >
+          <v-text-field 
+            v-model="formValues.name"
+            label="Nom"
+            :rules="nameRules"
+            required
+            outline
+            dense
+          />
+        </v-col>
+      </v-row>
+      <v-row>
+        <v-col
+          md="6"
+          sm="12" 
+          xs="12"
+        >
+          <v-text-field 
+            v-model="formValues.password"
+            label="Mot de passe"
+            :rules="passwordRules"
+            type="password"
+            required
+            outline
+            dense
+          />
+        </v-col>
+      </v-row>
+      <v-row>
+        <v-col md="6" sm="12" xs="12">
+          <v-btn
+            @click="submitConnexion"
           >
-            <v-text-field 
-              v-model="formValues.email"
-              label="Email"
-              :rules="emailRules"
-              required
-              outline
-              dense
-            />
-          </v-col>
-        </v-row>
-        <v-row>
-          <v-col
-            md="6 "
-            sm="8"
-            xs="12"
-          >
-            <v-text-field 
-              v-model="formValues.name"
-              label="Nom"
-              :rules="nameRules"
-              required
-              outline
-              dense
-            />
-          </v-col>
-        </v-row>
-        <v-row>
-          <v-col
-            md="6"
-            sm="8" 
-            xs="12"
-          >
-            <v-text-field 
-              v-model="formValues.password"
-              label="Mot de passe"
-              :rules="passwordRules"
-              type="password"
-              required
-              outline
-              dense
-            />
-          </v-col>
-        </v-row>
-        <v-row d-flex justify="center">
-          <v-col cols="6" sm="8" xs="12">
-            <v-btn
-              @click="submitConnexion"
-            >
-              Connexion
-            </v-btn>
-          </v-col>
-        </v-row>
-      </v-form>
-    </v-container>
+            Connexion
+          </v-btn>
+        </v-col>
+      </v-row>
+      <v-row>
+        <v-col md="6" sm="12" xs="12">
+          <v-btn :to="{name: 'Register'}">Inscription</v-btn>
+        </v-col>
+      </v-row>
+    </v-form>
+  </v-container>
 </template>
 
 <script>

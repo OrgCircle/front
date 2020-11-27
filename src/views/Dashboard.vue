@@ -1,23 +1,33 @@
 <template>
   <div class="home">
-    <v-container class="full-screen-centered">
+    <v-container>
+      <v-row>
+        <v-col>
+
+        </v-col>
+      </v-row>
+      <v-row>
+        <v-col>
+
+        </v-col>
+      </v-row>
+      <v-row>
+        <v-col>
+          
+        </v-col>
+      </v-row>
     </v-container>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'Dashboard'
+  name: 'Dashboard',
+  data: () => {
+
+  }
 }
 </script>
 
 <style scoped>
-.full-screen-centered {
-  padding: 0px;
-  width: 100vw;
-  height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
 </style>

@@ -25,10 +25,11 @@ const router = new VueRouter({
   routes
 })
 
+const exceptedRoute = ['Register', 'Home']
+
 router.beforeEach((to, from, next) => {
-  console.log(router)
-  console.log(to) 
-  if (to.name !== 'Home') next({ name: 'Home' })
+  if (!exceptedRoute.some(routeName => to.name === routeName)) 
+    next({ name: 'Home' });
   else next()
 })
 

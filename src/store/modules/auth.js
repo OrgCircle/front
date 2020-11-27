@@ -4,7 +4,8 @@ export default {
   state: {
     family: null,
     profil: null,
-    isAuthenticated: false
+    isAuthenticated: false,
+    createFamily: false
   },
 
   getters: {
@@ -17,27 +18,33 @@ export default {
   },
 
   mutations: {
-    setFamily(state, payload) {
+    SET_FAMILY (state, payload) {
       state.family = payload.family;
       if (state.family !== null) state.isAuthenticated = true;
     },
-    setProfil(state, payload) {
+    SET_PROFIL (state, payload) {
       state.profil = payload.profil;
+    },
+    ABLE_CREATE_FAMILY (state) {
+      state.createFamily = true
     }
   },
 
   actions: {
     async getFamily({ commit }) {
-      const payload = await this.axios.$get("/api/getAccountInfos").then(res => res.data);
-      commit("setFamily", payload);
+      const payload = await this.axios.$get("/api/account/infos");
+      commit("SET_FAMILY", payload);
     },
     async login ({ commit }, data) {
-      const payload = await this.axios.$post("/api/login", data).then(res => res.data);
-      commit("setData", payload);
+      const payload = await this.axios.$post("/api/login", data);
+      commit("SET_PROFIL", payload);
     },
     async register({ commit }, data) {
-      const payload = await this.axios.$post("/api/register", data).then(res => res.data);
-      commit("setFamily", payload)
+      console.log(data)
+      console.log(this)
+      const response = await this.axios.$post("/api/register", data);
+      if (response.status === 201) commit('ABLE_CREATE_FAMILY')
+      return response;
     }
   }
 };

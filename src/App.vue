@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <div v-if="showMenu" id="nav">
-      <router-link to="/">Home</router-link>
+      <router-link to="/">Acceuil</router-link>
     </div>
     <router-view/>
   </div>
@@ -11,9 +11,7 @@ export default {
   name: "app",
   data: () => {
     return {
-      exceptedRoute: [
-        '/'
-      ]
+      exceptedRoute: ['/']
     } 
   },
   computed: {

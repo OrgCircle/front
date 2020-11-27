@@ -5,8 +5,8 @@ import auth from "./modules/auth"
 
 Vue.use(Vuex);
 
-export let store = new Vuex.Store({
-    modules: [
+export const store = new Vuex.Store({
+    modules: { 
         auth
-    ]
+    }
 });
