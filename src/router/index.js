@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import store from './store'
+import store from '@/store'
 
 Vue.use(VueRouter)
 
@@ -18,7 +18,10 @@ const routes = [
   {
     path: '/dashboard',
     name: 'Dashboard',
-    component: () => import('../views/Dashboard.vue')
+    component: () => import('../views/Dashboard.vue'),
+    meta: {
+      requireLogin: true
+    }
   }
 ]
 
@@ -26,19 +29,19 @@ const router = new VueRouter({
   routes
 })
 
-let isLogin = () => {
-  if (store.auth.isAuthenticated)
-    return true;
-
-  
-
+let checkLogin = async function() {
+  if (localStorage.getItem('jwt')) {
+    await store.dispatch('auth/getAccountInfo');
+    if (store.getters['auth/getAuthenticated']) {
+      return true;
+    }
+  }
   return false
 }
 
-const exceptedRoute = ['Register', 'Home']
-
-router.beforeEach((to, from, next) => {
-  if (!exceptedRoute.some(routeName => to.name === routeName) && isLogin) 
+router.beforeEach(async function(to, from, next) {
+  let isLogin = await checkLogin();
+  if (to.matched.some(record => record.meta.requireLogin) && !isLogin) 
     next({ name: 'Home' });
   else next()
 })

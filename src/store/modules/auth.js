@@ -30,20 +30,27 @@ export default {
         id: payload._id,
         name: payload.name,
       };
-      if (state.profil !== null) state.isAuthenticated = true;
-    },
-    ABLE_CREATE_FAMILY (state) {
-      state.createFamily = true
     },
     LOGIN (state, payload) {
       localStorage.setItem('jwt', payload)
+      if (state.profil !== null) state.isAuthenticated = true;
+    },
+    DISCONNECT (state) {
+      localStorage.clear();
+      state.isAuthenticated = false;
     }
   },
 
   actions: {
-    async getFamily({ commit }) {
-      const response = await this.axios.get("/account/infos");
-      commit("SET_FAMILY", response);
+    async getAccountInfo({ commit }) {
+      try {
+        const response = await service.get("/accountInfo");
+        commit('SET_FAMILY', response.data)
+        commit('SET_PROFIL', response.data)
+      }catch (e) {
+        console.log(e)
+        commit('DISCONNECT')
+      }
     },
     async login ({ commit }, data) {
       const response = await service.post("/login", '', data);

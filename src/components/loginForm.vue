@@ -108,7 +108,6 @@ export default {
       if (this.$refs.form.validate()) {
         try {
           await this.login(this.formValues);
-          console.log(this)
           this.$router.push({name: 'Dashboard'});
         }
         catch (e) {
