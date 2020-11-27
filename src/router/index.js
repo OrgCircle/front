@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
+import store from './store'
 
 Vue.use(VueRouter)
 
@@ -25,10 +26,19 @@ const router = new VueRouter({
   routes
 })
 
+let isLogin = () => {
+  if (store.auth.isAuthenticated)
+    return true;
+
+  
+
+  return false
+}
+
 const exceptedRoute = ['Register', 'Home']
 
 router.beforeEach((to, from, next) => {
-  if (!exceptedRoute.some(routeName => to.name === routeName)) 
+  if (!exceptedRoute.some(routeName => to.name === routeName) && isLogin) 
     next({ name: 'Home' });
   else next()
 })
