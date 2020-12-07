@@ -22,6 +22,22 @@ const routes = [
     meta: {
       requireLogin: true
     }
+  },
+  {
+    path: '/lists',
+    name: 'Lists',
+    component: () => import('../views/Lists.vue'),
+    meta: {
+      requireLogin: true
+    }
+  },
+  {
+    path: '/calendar',
+    name: 'Calendar',
+    component: () => import('../views/Calendar.vue'),
+    meta: {
+      requireLogin: true
+    }
   }
 ]
 
