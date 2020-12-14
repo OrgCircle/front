@@ -1,11 +1,6 @@
 <template>
   <div class="lists">
-    <v-row>
-      <v-col><ListCard/></v-col>
-      <v-col><ListCard/></v-col>
-    </v-row>
-    <v-row>
-      <v-col><ListCard/></v-col>
+    <v-row v-for="list in lists" :key="list._id">
       <v-col><ListCard/></v-col>
     </v-row>
   </div>
@@ -13,31 +8,19 @@
 
 <script>
 import ListCard from '@/components/listCard'
-import axios  from 'axios'
+import { mapActions, mapGetters} from 'vuex'
 
 export default {
   name: 'Lists',
   components: { ListCard },
   data: function () {
     return {
-      name = []
+      lists : this.getAllList()
     }
   },
   methods: {
-    getListNames(name) {
-      axios
-        .get('mongodb://localhost/circle-fullstack/list', {
-          name: name
-        })
-        .then(res => {
-          return {
-            name
-          }
-        })
-        .catch(err => {
-          console.log(err);
-        })
-    }
+    ...mapActions('lists', ['fetchAllList']),
+    ...mapGetters('lists', ['getAllList']),
   }
 }
 </script>
