@@ -22,6 +22,9 @@ export default {
   },
 
   mutations: {
+    SET_AUTHENTICATED (state, payload) {
+      state.isAuthenticated = payload;
+    },
     SET_FAMILY (state, payload) {
       state.family = payload.family;
     },
@@ -45,8 +48,13 @@ export default {
     async getAccountInfo({ commit }) {
       try {
         const response = await service.get("/accountInfo");
-        commit('SET_FAMILY', response.data)
-        commit('SET_PROFIL', response.data)
+        if (response.status === 200) {
+          commit('SET_FAMILY', response.data)
+          commit('SET_PROFIL', response.data)
+          commit('SET_AUTHENTICATED', true)
+        } else {
+          commit('SET_AUTHENTICATED', false)
+        }
       }catch (e) {
         console.log(e)
         commit('DISCONNECT')
