@@ -46,6 +46,14 @@ const routes = [
     meta: {
       requireLogin: true
     }
+  },
+  {
+    path: '/my-family',
+    name: 'Family',
+    component: () => import('../views/Family.vue'),
+    meta: {
+      requireLogin: true
+    }
   }
 ]
 
@@ -65,8 +73,11 @@ let checkLogin = async function() {
 
 router.beforeEach(async function(to, from, next) {
   let isLogin = await checkLogin();
-  if (to.matched.some(record => record.meta.requireLogin) && !isLogin) 
+  if (to.matched.some(record => record.meta.requireLogin) && !isLogin)
     next({ name: 'Home' });
+  else if (to.matched.some(record => !record.meta.requireLogin) && isLogin) {
+    next({ name: 'Dashboard' });
+  }
   else next()
 })
 

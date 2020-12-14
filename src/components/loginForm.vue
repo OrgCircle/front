@@ -1,13 +1,14 @@
 <template>
   <v-container>
-    <v-form ref="form">
+    <v-form ref="form" class="form-center">
       <v-row>
         <v-col 
-          md="6 "
+          md="6"
           sm="12"
           xs="12"
         >
           <v-img 
+            class="margin-auto"
             lazy-src="@/assets/logo.png"
             max-width="100"
             src="../assets/logo.png"
@@ -107,8 +108,11 @@ export default {
     async submitConnexion () {
       if (this.$refs.form.validate()) {
         try {
-          await this.login(this.formValues);
-          this.$router.push({name: 'Dashboard'});
+          const response = await this.login(this.formValues);
+          console.log(response)
+          if (response.status === 200) {
+            this.$router.push({name: 'Dashboard'});
+          }
         }
         catch (e) {
           console.log(e);
@@ -125,3 +129,8 @@ export default {
   }
 }
 </script>
+<style scoped>
+.margin-auto {
+  margin: auto;
+}
+</style>

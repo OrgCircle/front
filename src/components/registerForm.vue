@@ -1,6 +1,6 @@
 <template>
     <v-container>
-      <v-form ref="form">
+      <v-form ref="form" class="form-center">
         <v-row>
           <v-col 
             md="6 "
@@ -40,7 +40,7 @@
             xs="12"
           >
             <v-text-field 
-              v-model="formValues.name"
+              v-model="formValues.username"
               label="Nom"
               :rules="nameRules"
               required
@@ -64,16 +64,10 @@
               outline
               dense
             />
-          </v-col>
-          <v-col
-            md="6"
-            sm="12" 
-            xs="12"
-          >
             <v-text-field 
-              v-model="formValues.passwordSame"
+              v-model="formValues.verifyPassword"
               label="Répéter le mot de passe"
-              :rules="passwordSameRules"
+              :rules="verifyPasswordRules"
               type="password"
               required
               outline
@@ -108,7 +102,7 @@ export default {
         passwordRules: [
           v => !!v || 'Le mot de passe est requis.'
         ],
-        passwordSameRules: [
+        verifyPasswordRules: [
           v => !!v || 'La répétition du mot de passe est requis.',
           v => v === this.formValues.password || 'Les deux mot de passe doivent être identique.'
         ],
@@ -124,7 +118,10 @@ export default {
     async submitInscription () {
       if (this.$refs.form.validate()) {
         try {
-          await this.register(this.formValues);
+          const response = await this.register(this.formValues);
+          if (response.status === 200) {
+            this.$router.push({name: 'Login'});
+          }
         }
         catch (e) {
           console.log(e);
@@ -134,10 +131,10 @@ export default {
     initEmptyForm () {
       return {
         email: '',
-        name: '',
+        username: '',
         familyName: '',
         password: '',
-        passwordSame: ''
+        verifyPassword: ''
       }
     }
   }
