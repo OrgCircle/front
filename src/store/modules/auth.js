@@ -54,11 +54,12 @@ export default {
     },
     async login ({ commit }, data) {
       const response = await service.post("/login", '', data);
-      commit("LOGIN", response.data.token)
-      commit("SET_PROFIL", response.data);
+      if (response.status === 200) commit("LOGIN", response.data.token)
+      if (response.status === 200) commit("SET_PROFIL", response.data);
+      return response;
     },
     async register({ commit }, data) {
-      const response = await service.post("/auth/register", data);
+      const response = await service.post("/register", '', data);
       if (response.status === 201) commit('ABLE_CREATE_FAMILY')
       return response;
     }

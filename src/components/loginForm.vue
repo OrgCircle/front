@@ -108,8 +108,11 @@ export default {
     async submitConnexion () {
       if (this.$refs.form.validate()) {
         try {
-          await this.login(this.formValues);
-          this.$router.push({name: 'Dashboard'});
+          const response = await this.login(this.formValues);
+          console.log(response)
+          if (response.status === 200) {
+            this.$router.push({name: 'Dashboard'});
+          }
         }
         catch (e) {
           console.log(e);
