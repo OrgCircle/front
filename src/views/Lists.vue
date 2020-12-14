@@ -1,6 +1,6 @@
 <template>
   <div class="lists">
-    {{title}}
+    <h1>{{title}}</h1>
   </div>
 </template>
 
@@ -9,7 +9,7 @@ export default {
   name: 'Lists',
   data: function () {
       return {
-          title: 'Calendrier'
+          title: 'Listes'
       }
   }
 }

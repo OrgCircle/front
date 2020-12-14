@@ -1,5 +1,5 @@
 <template>
-  <div class="calendar">
+  <div class="family">
     <h1>
       {{title}}
     </h1>
@@ -12,7 +12,7 @@ export default {
   name: 'Calendar',
   data: function () {
     return {
-        title: 'Calendrier'
+        title: 'Ma famille'
     }
   }
 }
