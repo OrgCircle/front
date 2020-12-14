@@ -28,7 +28,15 @@ const routes = [
     name: 'Lists',
     component: () => import('../views/Lists.vue'),
     meta: {
-      requireLogin: true
+      requireLogin: false
+    }
+  },
+  {
+    path: '/list',
+    name: 'List',
+    component: () => import('../views/List.vue'),
+    meta: {
+      requireLogin: false
     }
   },
   {
