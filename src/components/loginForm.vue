@@ -130,7 +130,4 @@ export default {
 }
 </script>
 <style scoped>
-.margin-auto {
-  margin: auto;
-}
 </style>

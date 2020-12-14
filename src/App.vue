@@ -1,23 +1,49 @@
 <template>
-  <div id="app">
-    <div v-if="showMenu" id="nav">
-      <router-link to="/">Acceuil</router-link>
-    </div>
-    <router-view/>
-  </div>
+  <v-app>
+    <v-card class="overflow-hidden">
+      <v-app-bar
+        color="indigo darken-2"
+        dark
+        elevate-on-scroll
+        src="https://picsum.photos/1920/1080?random"
+        scroll-target="#scrolling-techniques"
+      >
+        <template v-slot:img="{ props }">
+          <v-img
+            v-bind="props"
+            gradient="to top right, rgba(19,84,122,.5), rgba(128,208,199,.8)"
+          ></v-img>
+        </template>
+        <v-app-bar-nav-icon></v-app-bar-nav-icon>
+        <v-toolbar-title>Circle</v-toolbar-title>
+        <v-spacer></v-spacer>
+        <v-btn v-if="getAuthenticated()" to="/dashboard" icon>
+          <v-icon>mdi-home</v-icon>
+        </v-btn>
+      </v-app-bar>
+      <v-sheet
+        id="scrolling-techniques"
+        class="overflow-y-auto"
+      >
+        <v-container>
+          <router-view/>
+        </v-container>
+      </v-sheet>
+    </v-card>
+    
+  </v-app>
 </template>
 <script>
+import { mapGetters } from 'vuex';
 export default {
   name: "app",
   data: () => {
     return {
-      exceptedRoute: ['/']
+      exceptedRoute: ['/', '/register']
     } 
   },
-  computed: {
-    showMenu: function () {
-      return !this.exceptedRoute.some(path => path === this.$route.fullPath)
-    }
+  methods: {
+    ...mapGetters('auth', ['getAuthenticated'])
   }
 }
 </script>
@@ -28,18 +54,5 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-}
-
-#nav {
-  padding: 30px;
-
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-
-    &.router-link-exact-active {
-      color: #42b983;
-    }
-  }
 }
 </style>

@@ -3,6 +3,20 @@
       <v-form ref="form" class="form-center">
         <v-row>
           <v-col 
+            md="6"
+            sm="12"
+            xs="12"
+          >
+            <v-img 
+              class="margin-auto"
+              lazy-src="@/assets/logo.png"
+              max-width="100"
+              src="../assets/logo.png"
+            />
+          </v-col>
+        </v-row>
+        <v-row>
+          <v-col 
             md="6 "
             sm="12"
             xs="12"
