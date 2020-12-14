@@ -1,6 +1,9 @@
 <template>
   <div class="calendar">
-    {{title}}
+    <h1>
+      {{title}}
+    </h1>
+    
   </div>
 </template>
 

@@ -1,6 +1,6 @@
 <template>
     <v-container>
-      <v-form ref="form">
+      <v-form ref="form" class="form-center">
         <v-row>
           <v-col 
             md="6 "
@@ -64,12 +64,6 @@
               outline
               dense
             />
-          </v-col>
-          <v-col
-            md="6"
-            sm="12" 
-            xs="12"
-          >
             <v-text-field 
               v-model="formValues.passwordSame"
               label="Répéter le mot de passe"
