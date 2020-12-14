@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-    <v-container class="full-screen-centered">
+    <v-container>
       <v-row>
         <v-col>
           <login-form />
@@ -18,10 +18,4 @@ export default {
 }
 </script>
 
-<style scoped>
-.full-screen-centered {
-  padding: 0px;
-  width: 100vw;
-  height: 100vh;
-}
-</style>
+
