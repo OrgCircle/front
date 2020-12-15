@@ -7,8 +7,7 @@ export default {
 
   state: {
     allList: [],
-    list: null,
-    listId: null
+    list: null
   },
 
   getters: {
@@ -22,13 +21,10 @@ export default {
 
   mutations: {
     SET_ALL_LIST (state, payload) {
-      state.allList = payload.allList;
+      state.allList = payload;
     },
     SET_LIST (state, payload) {
-      state.list = payload.list;
-    },
-    SET_LIST_ID (state, payload) {
-      state.listId = payload.listId;
+      state.list = payload;
     }
   },
 
@@ -41,11 +37,10 @@ export default {
         console.log(e)
       }
     },
-    async fetchListbyId({ commit }) {
+    async fetchListbyId({ commit }, listId) {
       try {
-        const list = await service.get("/:id");
-        commit('SET_LIST', list.data)
-        commit('SET_LIST_ID', list.data._id)
+        const response = await service.get("/" + listId);
+        commit('SET_LIST', response.data)
       }catch (e) {
         console.log(e)
       }

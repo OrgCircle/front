@@ -1,7 +1,5 @@
 <template>
-    <v-container>
-      <v-card class="listCard">Test card</v-card>
-    </v-container>
+    <v-card :to="{name: 'List', params: {cardId}}" class="listCard">{{cardName}}</v-card>
 </template>
 
 <script>
@@ -9,8 +7,19 @@ export default {
   name: 'ListCard',
   data: function () {
       return {
-        
+
       };
+  },
+  props: {
+    cardName: {
+      type: String,
+      required: true,
+      default: 'List'
+    },
+    cardId: {
+      type: String,
+      required: true
+    },
   },
   methods: {},
 }
