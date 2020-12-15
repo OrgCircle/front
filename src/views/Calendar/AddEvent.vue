@@ -2,10 +2,14 @@
   <v-container class="calendar">
     <v-row>
       <v-col class="margin-auto">
-          {{title}}
-      </v-col>
-      <v-col class="margin-auto">
-          <create-event/>
+          <v-card dense>
+              <v-card-title>
+                Ajouter un événement
+              </v-card-title>
+              <v-card-text>
+                <create-event/>
+              </v-card-text>
+          </v-card>
       </v-col>
     </v-row>
   </v-container>

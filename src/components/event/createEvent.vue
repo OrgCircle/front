@@ -19,37 +19,58 @@
       </v-row>
       <v-row>
         <v-col
-          md="6"
-          sm="12" 
+          md="6 "
+          sm="12"
           xs="12"
         >
-        <v-date-picker
-          v-model="formValue.startDate"
-          elevation="15"
-        ></v-date-picker>
+          <v-text-field 
+            v-model="formValues.location"
+            label="Lieux"
+            :rules="nameRules"
+            required
+            outline
+            dense
+          />
         </v-col>
+      </v-row>
+      <v-row>
         <v-col
           md="6"
           sm="12" 
           xs="12"
         >
-        <v-date-picker
-          v-model="formValue.endDate"
-          elevation="15"
-        ></v-date-picker>
+          <v-date-picker
+            v-model="dates"
+            range
+          ></v-date-picker>
         </v-col>
       </v-row>
       <v-row>
-        <v-col md="6" sm="12" xs="12">
+        <v-col
+          md="6"
+          sm="12" 
+          xs="12"
+        >
+          <v-select 
+            label="Assigné à"
+            v-model="formValues.assigned_to"
+            :items="family.profiles"
+            item-value="_id"
+            item-text="name"
+            outline
+            multiple
+          />
+        </v-col>
+      </v-row>
+      <v-row>
+        <v-col md="2" sm="2" xs="2">
           <v-btn
             @click="$router.go(-1)"
           >
             Retour
           </v-btn>
         </v-col>
-      </v-row>
-      <v-row>
-        <v-col md="6" sm="12" xs="12">
+        <v-col md="2" sm="2" xs="2">
           <v-btn
             @click="submit"
           >
@@ -62,30 +83,46 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex'
+import { mapActions, mapGetters } from 'vuex'
 
 export default {
-  name: 'LoginForm',
+  name: 'CreateEvent',
   data: function () {
     return {
+      dates: [],
       nameRules: [
         v => !!v || 'Le nom est requis.'
       ],
-      formValues: this.initEmptyForm()
+      formValues: this.initEmptyForm(),
+      family: this.getFamily()
     }
   },
   methods: {
     ...mapActions('event', ['createEvent']),
+    ...mapGetters('auth', ['getFamily']),
     async submit () {
       if (this.$refs.form.validate()) {
-        try {
-          const response = {status: 200}
-          if (response.status === 200) {
-            this.$router.push({name: 'Calendar'});
+        if (this.dates.length > 0) {
+          if (this.dates.length === 2) {
+            this.dates.sort((dateA, dateB) => new Date(dateA) - new Date(dateB))
+            this.formValues.startDate = this.dates[0];
+            this.formValues.endDate = this.dates[1];
+          } else if (this.dates.length === 1) {
+            this.formValues.startDate = this.dates[0];
+            this.formValues.endDate = this.dates[0];
+          }
+          try {
+            const response = await this.createEvent(this.formValues);
+            if (response.status === 201) {
+              this.$router.push({name: 'Calendar'});
+            }
+          }
+          catch (e) {
+            console.log(e);
           }
         }
-        catch (e) {
-          console.log(e);
+        else {
+          this.$refs.form.console.error();
         }
       }
     },
@@ -95,7 +132,7 @@ export default {
         startDate: null,
         endDate: null,
         location: null,
-        assigne_to: [],
+        assigned_to: [],
       }
     }
   }

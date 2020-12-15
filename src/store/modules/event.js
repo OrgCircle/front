@@ -18,6 +18,9 @@ export default {
   mutations: {
     SET_EVENTS (state, payload) {
       state.events = payload;
+    },
+    ADD_EVENT (state, payload) {
+      state.events.push(payload)
     }
   },
 
@@ -35,9 +38,10 @@ export default {
     async createEvent({ commit }, data) {
         try {
             const response = await service.post("/", '', data);
-            if (response.status === 200) {
-                commit('SET_EVENTS', response.data)
+            if (response.status === 201) {
+                commit('ADD_EVENT', response.data)
             }
+            return response;
         }catch (e) {
             console.log(e);
         }

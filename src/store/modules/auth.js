@@ -11,7 +11,6 @@ export default {
     isAuthenticated: false,
     createFamily: false
   },
-
   getters: {
     getFamily(state) {
       return state.family;
@@ -20,7 +19,6 @@ export default {
       return state.isAuthenticated;
     }
   },
-
   mutations: {
     SET_AUTHENTICATED (state, payload) {
       state.isAuthenticated = payload;

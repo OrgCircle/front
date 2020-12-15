@@ -56,10 +56,6 @@
 import { mapGetters } from 'vuex';
 export default {
   name: "app",
-  mounted () {
-    console.log(this.getExcludedActionRoute())
-    console.log(this.$router.currentRoute.path)
-  },
   methods: {
     ...mapGetters('auth', ['getAuthenticated']),
     ...mapGetters('control', ['getActionAdd', 'getExcludedActionRoute']),
