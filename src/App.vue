@@ -30,20 +30,39 @@
         </v-container>
       </v-sheet>
     </v-card>
-    
+    <v-toolbar
+      v-if="getAuthenticated()" 
+      absolute
+      bottom
+      width="100vw"
+      color="primary"
+      class="d-flex justify-center"
+    >
+      <v-btn 
+        v-if="!getExcludedActionRoute().some(route => route === $router.currentRoute.name)"
+        color="secondary"
+        dark
+        :elevation="10"
+        class="mb-15"
+        icon
+        :to="getActionAdd()"
+      >
+        <v-icon>mdi-plus</v-icon>
+      </v-btn>
+    </v-toolbar>
   </v-app>
 </template>
 <script>
 import { mapGetters } from 'vuex';
 export default {
   name: "app",
-  data: () => {
-    return {
-      exceptedRoute: ['/', '/register']
-    } 
+  mounted () {
+    console.log(this.getExcludedActionRoute())
+    console.log(this.$router.currentRoute.path)
   },
   methods: {
-    ...mapGetters('auth', ['getAuthenticated'])
+    ...mapGetters('auth', ['getAuthenticated']),
+    ...mapGetters('control', ['getActionAdd', 'getExcludedActionRoute']),
   }
 }
 </script>

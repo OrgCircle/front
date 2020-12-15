@@ -134,7 +134,7 @@ export default {
         try {
           const response = await this.register(this.formValues);
           if (response.status === 200) {
-            this.$router.push({name: 'Login'});
+            this.$router.push({name: 'Home'});
           }
         }
         catch (e) {
