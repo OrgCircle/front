@@ -16,7 +16,7 @@ export default {
   },
 
   mutations: {
-    SET_EVENT (state, payload) {
+    SET_EVENTS (state, payload) {
       state.events = payload;
     }
   },

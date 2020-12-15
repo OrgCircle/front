@@ -34,7 +34,15 @@ const routes = [
   {
     path: '/calendar',
     name: 'Calendar',
-    component: () => import('../views/Calendar.vue'),
+    component: () => import('../views/Calendar/Calendar.vue'),
+    meta: {
+      requireLogin: true
+    }
+  },
+  {
+    path: '/add-event',
+    name: 'AddEvent',
+    component: () => import('../views/Calendar/AddEvent.vue'),
     meta: {
       requireLogin: true
     }
