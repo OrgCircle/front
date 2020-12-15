@@ -51,7 +51,7 @@
 </template>
 
 <script>
-import { mapActions, mapGetters } from 'vuex';
+import { mapActions, mapGetters, mapMutations } from 'vuex';
 
 export default {
   name: 'Calendar',
@@ -67,10 +67,12 @@ export default {
   },
   mounted: function () {
     this.fetchEvents();
+    this.SET_ACTION_ADD({name: 'AddEvent'})
   },
   methods: {
     ...mapActions('event', ['fetchEvents']),
     ...mapGetters('event', ['getEvents']),
+    ...mapMutations('control', ['SET_ACTION_ADD'])
   }
 }
 </script>
