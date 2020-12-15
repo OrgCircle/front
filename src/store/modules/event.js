@@ -24,6 +24,10 @@ export default {
     },
     ADD_EVENT (state, payload) {
       state.events.push(payload)
+    },
+    MODIFY_EVENT (state, payload) {
+      const eventIndex = state.events.findIndex(event => payload._id === event._id);
+      state.events[eventIndex] = payload;
     }
   },
 
@@ -40,14 +44,27 @@ export default {
     },
     async createEvent({ commit }, data) {
       try {
-          const response = await service.post("/", '', data);
-          if (response.status === 201) {
-              commit('ADD_EVENT', response.data)
-          }
-          return response;
+        const response = await service.post("/", '', data);
+        if (response.status === 201) {
+            commit('ADD_EVENT', response.data)
+        }
+        return response;
       }catch (e) {
           console.log(e);
       }
     },
+    async modifyEvent({ commit }, eventId, data) {
+      console.log(eventId)
+      console.log(data)
+      try {
+        const response = await service.patch(`/${eventId}`, '', data);
+        if (response.status === 201) {
+            commit('ADD_EVENT', response.data)
+        }
+        return response;
+      } catch (e) {
+        console.log(e);
+      }
+    }
   }
 };

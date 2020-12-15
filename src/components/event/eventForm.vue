@@ -126,7 +126,7 @@ export default {
     }
   },
   methods: {
-    ...mapActions('event', ['createEvent']),
+    ...mapActions('event', ['createEvent', 'modifyEvent']),
     ...mapGetters('auth', ['getFamily']),
     async submit () {
       if (this.$refs.form.validate()) {
@@ -140,7 +140,13 @@ export default {
             this.formValues.endDate = this.dates[0];
           }
           try {
-            const response = await this.createEvent(this.formValues);
+            let response = {status: 500};
+            if (this.type === "Create") {
+              response = await this.createEvent(this.formValues);
+            }
+            else if (this.type === "Modify") {
+              response = await this.modifyEvent(this.event._id, this.formValues);
+            }
             if (response.status === 201) {
               this.$router.push({name: 'Calendar'});
             }
