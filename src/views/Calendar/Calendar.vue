@@ -83,6 +83,7 @@
         :event-overlap-mode="mode"
         :event-overlap-threshold="30"
         @change="getEvents"
+        @click:event="showModifyEvent"
       ></v-calendar>
     </v-sheet>
   </v-container>
@@ -114,6 +115,7 @@ export default {
     events: function () {
       return this.getEvents().map(event => {
         return {
+          id: event._id,
           name: event.name,
           start: this.format(new Date(event.startDate), 'yyyy-MM-dd'),
           end: this.format(new Date(event.endDate), 'yyyy-MM-dd'),
@@ -128,7 +130,10 @@ export default {
   methods: {
     ...mapActions('event', ['fetchEvents']),
     ...mapGetters('event', ['getEvents']),
-    ...mapMutations('control', ['SET_ACTION_ADD'])
+    ...mapMutations('control', ['SET_ACTION_ADD']),
+    showModifyEvent({event}) {
+      this.$router.push({name: 'ModifyEvent', params: {eventId: event.id}})
+    },
   }
 }
 </script>

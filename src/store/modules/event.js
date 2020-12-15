@@ -12,6 +12,9 @@ export default {
   getters: {
     getEvents(state) {
       return state.events;
+    },
+    getEventById: (state) => (id) => {
+      return state.events.find(event => event._id === id);
     }
   },
 
@@ -36,15 +39,15 @@ export default {
       }
     },
     async createEvent({ commit }, data) {
-        try {
-            const response = await service.post("/", '', data);
-            if (response.status === 201) {
-                commit('ADD_EVENT', response.data)
-            }
-            return response;
-        }catch (e) {
-            console.log(e);
-        }
+      try {
+          const response = await service.post("/", '', data);
+          if (response.status === 201) {
+              commit('ADD_EVENT', response.data)
+          }
+          return response;
+      }catch (e) {
+          console.log(e);
+      }
     }
   }
 };

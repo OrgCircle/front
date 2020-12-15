@@ -4,10 +4,10 @@
       <v-col class="margin-auto">
           <v-card dense>
               <v-card-title>
-                Ajouter un événement
+                Modifier un événement
               </v-card-title>
               <v-card-text>
-                <event-form/>
+                <event-form type="Modify" :event="event" />
               </v-card-text>
           </v-card>
       </v-col>
@@ -15,16 +15,24 @@
   </v-container>
 </template>
 <script>
-import EventForm from '@/components/event/eventForm'
+import EventForm from '@/components/event/eventForm';
 
 export default {
-    name: 'AddEvent',
+    name: 'ModifyEvent',
     components: {EventForm},
     data() {
         return {
-            title: 'Add event'
+            event: null
         }
-    }
+    },
+    computed: {
+        eventId: function () {
+            return this.$route.params.eventId;
+        }
+    },
+    mounted() {
+        this.event = this.$store.getters['event/getEventById'](this.eventId);
+    },
 }
 </script>
 

@@ -74,7 +74,8 @@
           <v-btn
             @click="submit"
           >
-            Ajouter l'événement
+            {{ type === "Create" ? "Ajouter l'événement" : ''}}
+            {{ type === "Modify" ? "Modifier l'événement" : ''}}
           </v-btn>
         </v-col>
       </v-row>
@@ -84,9 +85,22 @@
 
 <script>
 import { mapActions, mapGetters } from 'vuex'
+import { format } from 'date-fns'
 
 export default {
-  name: 'CreateEvent',
+  name: 'EventForm',
+  props: {
+    event: {
+      type: Object,
+      required: false,
+      default: () => null
+    },
+    type: {
+      type: String,
+      required: false,
+      default: () => 'Create'
+    }
+  },
   data: function () {
     return {
       dates: [],
@@ -94,7 +108,21 @@ export default {
         v => !!v || 'Le nom est requis.'
       ],
       formValues: this.initEmptyForm(),
-      family: this.getFamily()
+      family: this.getFamily(),
+      format
+    }
+  },
+  watch: {
+    event: function () {
+      if (this.event) {
+        this.formValues = {
+          name: this.event.name,
+          startDate: this.format(new Date(this.event.startDate), 'yyyy-MM-dd'),
+          endDate: this.format(new Date(this.event.endDate), 'yyyy-MM-dd'),
+          location: this.event.location,
+          assigned_to: this.event.assigned_to,
+        };
+      }
     }
   },
   methods: {
