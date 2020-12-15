@@ -48,6 +48,14 @@ const routes = [
     }
   },
   {
+    path: '/modify-event/:eventId',
+    name: 'ModifyEvent',
+    component: () => import('../views/Calendar/ModifyEvent.vue'),
+    meta: {
+      requireLogin: true
+    }
+  },
+  {
     path: '/my-family',
     name: 'Family',
     component: () => import('../views/Family.vue'),
