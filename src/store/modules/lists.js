@@ -44,6 +44,16 @@ export default {
       }catch (e) {
         console.log(e)
       }
+    },
+    async createList({ commit }, data) {
+      try {
+          const response = await service.post("/", '', data);
+          if (response.status === 200) {
+              commit('SET_LIST', response.data)
+          }
+      }catch (e) {
+          console.log(e);
+      }
     }
   }
 };

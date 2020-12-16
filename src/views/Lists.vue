@@ -7,7 +7,7 @@
 </template>
 
 <script>
-import ListCard from '@/components/listCard'
+import ListCard from '@/components/list/listCard'
 import { mapActions, mapGetters} from 'vuex'
 
 export default {
