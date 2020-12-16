@@ -109,7 +109,6 @@ export default {
       if (this.$refs.form.validate()) {
         try {
           const response = await this.login(this.formValues);
-          console.log(response)
           if (response.status === 200) {
             this.$router.push({name: 'Dashboard'});
           }
