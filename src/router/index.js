@@ -34,7 +34,7 @@ const routes = [
   {
     path: '/lists/:id',
     name: 'List',
-    component: () => import('../views/List.vue'),
+    component: () => import('../views/List/List.vue'),
     meta: {
       requireLogin: true
     }

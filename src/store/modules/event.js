@@ -28,6 +28,10 @@ export default {
     MODIFY_EVENT (state, payload) {
       const eventIndex = state.events.findIndex(event => payload._id === event._id);
       state.events[eventIndex] = payload;
+    },
+    DELETE_EVENT (state, payload) {
+      const eventIndex = state.events.findIndex(event => payload === event._id);
+      state.events.splice(eventIndex, 1);
     }
   },
 
@@ -53,17 +57,25 @@ export default {
           console.log(e);
       }
     },
-    async modifyEvent({ commit }, eventId, data) {
-      console.log(eventId)
-      console.log(data)
+    async modifyEvent({ commit }, data) {
       try {
-        const response = await service.patch(`/${eventId}`, '', data);
+        const response = await service.patch(`/${data.id}`, data);
         if (response.status === 201) {
-            commit('ADD_EVENT', response.data)
+            commit('MODIFY_EVENT', response.data)
         }
         return response;
       } catch (e) {
         console.log(e);
+      }
+    },
+    async deleteEvent({ commit }, data) {
+      try {
+        const response = await service.delete(`/${data.id}`);
+        if (response.status === 204) {
+          commit('DELETE_EVENT', data.id)
+        }
+      } catch (e) {
+        console.log(e)
       }
     }
   }

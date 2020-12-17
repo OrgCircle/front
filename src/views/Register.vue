@@ -11,11 +11,11 @@
 </template>
 
 <script>
-import RegisterForm from '@/components/registerForm'
+import RegisterForm from "@/components/registerForm";
 export default {
-  name: 'Register',
-  components: { RegisterForm }
-}
+  name: "Register",
+  components: { RegisterForm },
+};
 </script>
 
 <style scoped>

@@ -82,9 +82,50 @@
         :events="events"
         :event-overlap-mode="mode"
         :event-overlap-threshold="30"
+        locale="fr"
         @change="getEvents"
-        @click:event="showModifyEvent"
+        @click:event="showEvent"
       ></v-calendar>
+      <v-menu
+          v-model="selectedOpen"
+          :close-on-content-click="false"
+          :activator="selectedElement"
+          offset-x
+        >
+          <v-card
+            color="grey lighten-4"
+            min-width="150px"
+            flat
+          >
+            <v-toolbar
+              dark
+            >
+              <v-btn 
+                icon
+                @click="showModifyEvent"
+              >
+                <v-icon>mdi-pencil</v-icon>
+              </v-btn>
+              <v-toolbar-title v-html="selectedEvent.name"></v-toolbar-title>
+              <v-spacer></v-spacer>
+              <v-btn 
+                icon
+                @click="deleteEventAction"
+              >
+                <v-icon>mdi-delete</v-icon>
+              </v-btn>
+            </v-toolbar>
+            <v-card-actions>
+              <v-btn
+                text
+                color="secondary"
+                @click="selectedOpen = false"
+              >
+                Retour
+              </v-btn>
+            </v-card-actions>
+          </v-card>
+        </v-menu>
     </v-sheet>
   </v-container>
 </template>
@@ -108,32 +149,67 @@ export default {
           day: 'Jours',
           '4day': '4 jours',
         },
+        selectedEvent: {},
+        selectedElement: null,
+        selectedOpen: false,
+        events: [],
         format,
     }
   },
-  computed: {
-    events: function () {
-      return this.getEvents().map(event => {
-        return {
-          id: event._id,
-          name: event.name,
-          start: this.format(new Date(event.startDate), 'yyyy-MM-dd'),
-          end: this.format(new Date(event.endDate), 'yyyy-MM-dd'),
-        }
-      });
-    }
-  },
-  mounted: function () {
-    this.fetchEvents();
+  mounted: async function () {
+    await this.fetchEvents();
     this.SET_ACTION_ADD({name: 'AddEvent'});
+    this.initEvents();
   },
   methods: {
-    ...mapActions('event', ['fetchEvents']),
+    ...mapActions('event', ['fetchEvents', 'deleteEvent']),
     ...mapGetters('event', ['getEvents']),
     ...mapMutations('control', ['SET_ACTION_ADD']),
-    showModifyEvent({event}) {
-      this.$router.push({name: 'ModifyEvent', params: {eventId: event.id}})
+    initEvents() {
+      const events = this.getEvents();
+      console.log(events)
+      if (events.length > 0) {
+        this.events = this.getEvents().map(event => {
+          return {
+            id: event._id,
+            name: event.name,
+            start: this.format(new Date(event.startDate), 'yyyy-MM-dd'),
+            end: this.format(new Date(event.endDate), 'yyyy-MM-dd'),
+          }
+        });
+      } else {
+        this.events = [];
+      }
+      console.log(this.events)
     },
+    showModifyEvent() {
+      this.$router.push({name: 'ModifyEvent', params: {eventId: this.selectedEvent.id}})
+    },
+    showEvent ({ nativeEvent, event }) {
+        const open = () => {
+          this.selectedEvent = event
+          this.selectedElement = nativeEvent.target
+          setTimeout(() => {
+            this.selectedOpen = true
+          }, 10)
+        }
+
+        if (this.selectedOpen) {
+          this.selectedOpen = false
+          setTimeout(open, 10)
+        } else {
+          open()
+        }
+
+        nativeEvent.stopPropagation()
+      },
+      deleteEventAction () {
+        this.deleteEvent(this.selectedEvent);
+        const index = this.events.findIndex(event => this.selectedEvent.id === event.id);
+        this.events.splice(index, 1);
+        this.selectedEvent = {}
+        this.selectedOpen = false;
+      }
   }
 }
 </script>

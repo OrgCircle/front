@@ -24,7 +24,7 @@
       </v-sheet>
     </v-card>
     <v-toolbar
-      v-if="getAuthenticated()" 
+      v-if="!getExcludedActionRoute().some(route => route === $router.currentRoute.name) && getAuthenticated()"
       absolute
       bottom
       width="100vw"
