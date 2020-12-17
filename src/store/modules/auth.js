@@ -1,5 +1,5 @@
-import Service from '../../helpers/services';
-const NAMESPACE = 'auth';
+import Service from "../../helpers/services";
+const NAMESPACE = "auth";
 let service = new Service(NAMESPACE);
 
 export default {
@@ -9,37 +9,37 @@ export default {
     family: null,
     profil: null,
     isAuthenticated: false,
-    createFamily: false
+    createFamily: false,
   },
   getters: {
     getFamily(state) {
       return state.family;
     },
+    getProfile(state) {
+      return state.profil;
+    },
     getAuthenticated(state) {
       return state.isAuthenticated;
-    }
+    },
   },
   mutations: {
-    SET_AUTHENTICATED (state, payload) {
+    SET_AUTHENTICATED(state, payload) {
       state.isAuthenticated = payload;
     },
-    SET_FAMILY (state, payload) {
+    SET_FAMILY(state, payload) {
       state.family = payload.family;
     },
-    SET_PROFIL (state, payload) {
-      state.profil = {
-        id: payload._id,
-        name: payload.name,
-      };
+    SET_PROFIL(state, payload) {
+      state.profil = payload;
     },
-    LOGIN (state, payload) {
-      localStorage.setItem('jwt', payload)
+    LOGIN(state, payload) {
+      localStorage.setItem("jwt", payload);
       if (state.profil !== null) state.isAuthenticated = true;
     },
-    DISCONNECT (state) {
+    DISCONNECT(state) {
       localStorage.clear();
       state.isAuthenticated = false;
-    }
+    },
   },
 
   actions: {
@@ -47,27 +47,27 @@ export default {
       try {
         const response = await service.get("/accountInfo");
         if (response.status === 200) {
-          commit('SET_FAMILY', response.data)
-          commit('SET_PROFIL', response.data)
-          commit('SET_AUTHENTICATED', true)
+          commit("SET_FAMILY", response.data);
+          commit("SET_PROFIL", response.data.profile);
+          commit("SET_AUTHENTICATED", true);
         } else {
-          commit('SET_AUTHENTICATED', false)
+          commit("SET_AUTHENTICATED", false);
         }
-      }catch (e) {
-        console.log(e)
-        commit('DISCONNECT')
+      } catch (e) {
+        console.log(e);
+        commit("DISCONNECT");
       }
     },
-    async login ({ commit }, data) {
-      const response = await service.post("/login", '', data);
-      if (response.status === 200) commit("LOGIN", response.data.token)
+    async login({ commit }, data) {
+      const response = await service.post("/login", "", data);
+      if (response.status === 200) commit("LOGIN", response.data.token);
       if (response.status === 200) commit("SET_PROFIL", response.data);
       return response;
     },
     async register({ commit }, data) {
-      const response = await service.post("/register", '', data);
-      if (response.status === 201) commit('ABLE_CREATE_FAMILY')
+      const response = await service.post("/register", "", data);
+      if (response.status === 201) commit("ABLE_CREATE_FAMILY");
       return response;
-    }
-  }
+    },
+  },
 };
