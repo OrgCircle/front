@@ -31,7 +31,7 @@
       </v-sheet>
     </v-card>
     <v-toolbar
-      v-if="getAuthenticated()" 
+      v-if="!getExcludedActionRoute().some(route => route === $router.currentRoute.name) && getAuthenticated()"
       absolute
       bottom
       width="100vw"
@@ -39,7 +39,6 @@
       class="d-flex justify-center"
     >
       <v-btn 
-        v-if="!getExcludedActionRoute().some(route => route === $router.currentRoute.name)"
         color="secondary"
         :dark="true"
         :elevation="10"

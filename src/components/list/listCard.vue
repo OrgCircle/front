@@ -1,5 +1,5 @@
 <template>
-    <v-card :to="{name: 'List', params: {cardId}}" class="listCard">{{cardName}}</v-card>
+    <v-card :to="{name: 'List', params: {id: cardId}}" class="listCard">{{cardName}}</v-card>
 </template>
 
 <script>

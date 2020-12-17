@@ -32,7 +32,11 @@ export default {
     MODIFY_LIST (state, payload) {
       const listIndex = state.allList.findIndex(list => payload._id === list._id);
       state.allList[listIndex] = payload;
-    }
+    },
+    ADD_TASK_TO_LIST (state, payload) {
+      const listIndex = state.allList.findIndex(list => payload._id === list._id);
+      state.allList[listIndex] = payload;
+    },
   },
 
   actions: {
@@ -63,11 +67,9 @@ export default {
           console.log(e);
       }
     },
-    async modifyList({ commit }, listId, data) {
-      console.log(listId)
-      console.log(data)
+    async modifyList({ commit }, data) {
       try {
-        const response = await service.patch(`/${listId}`, '', data);
+        const response = await service.patch(`/${data._id}`, '', data);
         if (response.status === 201) {
             commit('ADD_LIST', response.data)
         }
@@ -75,6 +77,28 @@ export default {
       } catch (e) {
         console.log(e);
       }
-    }
+    },
+    async addTaskToList({ commit }, data) {
+      try {
+        const response = await service.post(`/${data.id}/task`, '', data.data);
+        if (response.status === 201) {
+            commit('ADD_TASK_TO_LIST', response.data)
+        }
+        return response;
+      } catch (e) {
+        console.log(e);
+      }
+    },
+    async deleteTaskToList({ commit }, data) {
+      try {
+        const response = await service.delete(`/${data.id}/task/${data.taskId}`);
+        if (response.status === 201) {
+            commit('SET_LIST', response.data)
+        }
+        return response;
+      } catch (e) {
+        console.log(e);
+      }
+    },
   }
 };
