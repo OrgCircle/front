@@ -116,12 +116,19 @@ export default {
     event: function () {
       if (this.event) {
         this.formValues = {
+          id: this.event._id,
           name: this.event.name,
           startDate: this.format(new Date(this.event.startDate), 'yyyy-MM-dd'),
           endDate: this.format(new Date(this.event.endDate), 'yyyy-MM-dd'),
           location: this.event.location,
           assigned_to: this.event.assigned_to,
         };
+        if (this.event.startDate) {
+          this.dates.push(this.event.startDate)
+        }
+        if (this.event.endDate) {
+          this.dates.push(this.event.endDate)
+        }
       }
     }
   },
@@ -145,7 +152,7 @@ export default {
               response = await this.createEvent(this.formValues);
             }
             else if (this.type === "Modify") {
-              response = await this.modifyEvent(this.event._id, this.formValues);
+              response = await this.modifyEvent(this.formValues);
             }
             if (response.status === 201) {
               this.$router.push({name: 'Calendar'});
@@ -154,9 +161,6 @@ export default {
           catch (e) {
             console.log(e);
           }
-        }
-        else {
-          this.$refs.form.console.error();
         }
       }
     },

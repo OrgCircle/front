@@ -53,11 +53,9 @@ export default {
           console.log(e);
       }
     },
-    async modifyEvent({ commit }, eventId, data) {
-      console.log(eventId)
-      console.log(data)
+    async modifyEvent({ commit }, data) {
       try {
-        const response = await service.patch(`/${eventId}`, '', data);
+        const response = await service.patch(`/${data.id}`, data);
         if (response.status === 201) {
             commit('ADD_EVENT', response.data)
         }
