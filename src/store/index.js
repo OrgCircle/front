@@ -1,15 +1,17 @@
-import Vue from 'vue'
-import Vuex from 'vuex'
-import auth from "./modules/auth"
-import event from "./modules/event"
-import control from "./modules/control"
+import Vue from "vue";
+import Vuex from "vuex";
+import auth from "./modules/auth";
+import event from "./modules/event";
+import control from "./modules/control";
+import profile from "./modules/profile";
 
 Vue.use(Vuex);
 
 export default new Vuex.Store({
-    modules: { 
-        auth,
-        event,
-        control
-    }   
+  modules: {
+    auth,
+    event,
+    control,
+    profile,
+  },
 });
