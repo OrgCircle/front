@@ -1,5 +1,5 @@
 <template>
-  <div class="home">
+  <div>
     <v-container>
       <v-row>
         <v-col>
@@ -17,5 +17,3 @@ export default {
   components: { LoginForm }
 }
 </script>
-
-

@@ -68,6 +68,8 @@
       <v-row>
         <v-col md="6" sm="12" xs="12">
           <v-btn
+            class="form-btn"
+            color="#abc8e2"
             @click="submitConnexion"
           >
             Connexion
@@ -76,7 +78,10 @@
       </v-row>
       <v-row>
         <v-col md="6" sm="12" xs="12">
-          <v-btn :to="{name: 'Register'}">Inscription</v-btn>
+          <v-btn 
+          class="form-btn"
+          color="#abc8e2"
+          :to="{name: 'Register'}">Inscription</v-btn>
         </v-col>
       </v-row>
     </v-form>
@@ -129,4 +134,7 @@ export default {
 }
 </script>
 <style scoped>
+.form-btn {
+  color: white;
+}
 </style>
