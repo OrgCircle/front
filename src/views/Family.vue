@@ -47,7 +47,7 @@
         </v-card>
       </v-dialog>
     </div>
-    <div class="d-flex flex-column ">
+    <div class="d-flex flex-column">
       <v-card
         v-for="profile in getFamilyProfiles()"
         v-bind:key="profile._id"
@@ -56,6 +56,7 @@
         <h2>{{ profile.name }}</h2>
         <v-btn
           color="red"
+          v-if="profile.role === 'ADMIN'"
           class="white--text"
           @click="handleDelete(profile._id)"
           >Supprimer</v-btn
