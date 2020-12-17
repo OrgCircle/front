@@ -49,16 +49,16 @@
     </div>
     <div class="d-flex flex-column">
       <v-card
-        v-for="profile in getFamilyProfiles()"
-        v-bind:key="profile._id"
+        v-for="prof in getFamilyProfiles()"
+        v-bind:key="prof._id"
         class="pa-4 mb-2"
       >
-        <h2>{{ profile.name }}</h2>
+        <h2>{{ prof.name }}</h2>
         <v-btn
           color="red"
           v-if="profile.role === 'ADMIN'"
           class="white--text"
-          @click="handleDelete(profile._id)"
+          @click="handleDelete(prof._id)"
           >Supprimer</v-btn
         >
       </v-card>
