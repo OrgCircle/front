@@ -5,7 +5,7 @@
         <v-sheet
           tile
           height="54"
-          class="d-flex"
+          class="d-flex sheet"
         >
           <v-toolbar
             flat
@@ -16,9 +16,9 @@
               small
               @click="$refs.calendar.prev()"
             >
-              <v-icon small>mdi-chevron-left</v-icon>
+              <v-icon small class="chevrons">mdi-chevron-left</v-icon>
             </v-btn>
-            <v-toolbar-title>
+            <v-toolbar-title class="title">
               {{ title }}
             </v-toolbar-title>
             <v-btn
@@ -27,7 +27,7 @@
               small
               @click="$refs.calendar.next()"
             >
-              <v-icon small>mdi-chevron-right</v-icon>
+              <v-icon small class="chevrons">mdi-chevron-right</v-icon>
             </v-btn>
             <v-spacer></v-spacer>
           </v-toolbar>
@@ -215,4 +215,19 @@ export default {
 </script>
 
 <style scoped>
+.sheet header{
+  display: flex !important;
+  justify-content: center;
+  align-items: center;
+}
+
+.title{
+  font-size: 1.75em !important;
+  font-family: Avenir, Helvetica, Arial, sans-serif !important;
+}
+
+.chevrons{
+  font-size: 20px !important;
+}
+
 </style>

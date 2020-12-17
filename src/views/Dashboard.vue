@@ -57,6 +57,7 @@ export default {
 .card{
   justify-content: center;
   color: white;
+  border-radius: 20px !important;
 }
 
 .card-family{

@@ -1,5 +1,5 @@
 <template>
-    <v-card :to="{name: 'List', params: {id: cardId}}" class="listCard">{{cardName}}</v-card>
+    <v-card color="#ABC8E2" :to="{name: 'List', params: {id: cardId}}" class="listCard">{{cardName}}</v-card>
 </template>
 
 <script>
@@ -32,6 +32,9 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
+  color: white;
+  font-size: 1.25rem;
+  font-weight: 500;
 }
 
 </style>
