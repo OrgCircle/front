@@ -1,5 +1,5 @@
 import Service from '../../helpers/services';
-const NAMESPACE = 'list';
+const NAMESPACE = 'lists';
 let service = new Service(NAMESPACE);
 
 export default {
@@ -25,6 +25,13 @@ export default {
     },
     SET_LIST (state, payload) {
       state.list = payload;
+    },
+    ADD_LIST (state, payload) {
+      state.allList.push(payload)
+    },
+    MODIFY_LIST (state, payload) {
+      const listIndex = state.allList.findIndex(list => payload._id === list._id);
+      state.allList[listIndex] = payload;
     }
   },
 
@@ -47,12 +54,26 @@ export default {
     },
     async createList({ commit }, data) {
       try {
-          const response = await service.post("/", '', data);
-          if (response.status === 200) {
-              commit('SET_LIST', response.data)
-          }
+        const response = await service.post("/", '', data);
+        if (response.status === 201) {
+            commit('ADD_LIST', response.data)
+        }
+        return response;
       }catch (e) {
           console.log(e);
+      }
+    },
+    async modifyList({ commit }, listId, data) {
+      console.log(listId)
+      console.log(data)
+      try {
+        const response = await service.patch(`/${listId}`, '', data);
+        if (response.status === 201) {
+            commit('ADD_LIST', response.data)
+        }
+        return response;
+      } catch (e) {
+        console.log(e);
       }
     }
   }

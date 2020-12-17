@@ -8,7 +8,7 @@
 
 <script>
 import ListCard from '@/components/list/listCard'
-import { mapActions, mapGetters} from 'vuex'
+import { mapActions, mapGetters, mapMutations} from 'vuex'
 
 export default {
   name: 'Lists',
@@ -26,9 +26,11 @@ export default {
   methods: {
     ...mapActions('lists', ['fetchAllList']),
     ...mapGetters('lists', ['getAllList']),
+    ...mapMutations('control', ['SET_ACTION_ADD']),
   },
-  beforeMount (){
-    this.fetchAllList()
+  mounted (){
+    this.fetchAllList(),
+    this.SET_ACTION_ADD({name: 'AddList'});
   }
 }
 </script>

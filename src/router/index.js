@@ -32,7 +32,7 @@ const routes = [
     }
   },
   {
-    path: '/list/:id',
+    path: '/lists/:id',
     name: 'List',
     component: () => import('../views/List.vue'),
     meta: {
@@ -59,6 +59,14 @@ const routes = [
     path: '/modify-event/:eventId',
     name: 'ModifyEvent',
     component: () => import('../views/Calendar/ModifyEvent.vue'),
+    meta: {
+      requireLogin: true
+    }
+  },
+  {
+    path: '/add-list',
+    name: 'AddList',
+    component: () => import('../views/List/AddList.vue'),
     meta: {
       requireLogin: true
     }
