@@ -115,19 +115,21 @@ export default {
   watch: {
     event: function () {
       if (this.event) {
+        const dateStart = this.format(new Date(this.event.startDate), 'yyyy-MM-dd');
+        const dateEnd = this.format(new Date(this.event.endDate), 'yyyy-MM-dd')
         this.formValues = {
           id: this.event._id,
           name: this.event.name,
-          startDate: this.format(new Date(this.event.startDate), 'yyyy-MM-dd'),
-          endDate: this.format(new Date(this.event.endDate), 'yyyy-MM-dd'),
+          startDate: dateStart,
+          endDate: dateEnd,
           location: this.event.location,
           assigned_to: this.event.assigned_to,
         };
-        if (this.event.startDate) {
-          this.dates.push(this.event.startDate)
+        if (dateEnd) {
+          this.dates.push(dateEnd)
         }
-        if (this.event.endDate) {
-          this.dates.push(this.event.endDate)
+        if (dateStart) {
+          this.dates.push(dateStart)
         }
       }
     }
