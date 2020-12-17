@@ -50,7 +50,7 @@ export default class Service {
 				data: params,
 				headers: {'Authorization': `Bearer ${this._getJwt()}`}
 			}).then((response) => {
-				if (response.data || response.status == 200){
+				if (response.data || response.status === 200 || response.status === 204 ||response.status === 201){
 					resolve(response);
 				}else{
 					reject(response);
@@ -193,7 +193,7 @@ export default class Service {
 		}
         return new Promise((resolve, reject) => {
             this._req(fullPathWithQuery,'delete').then((res)=>{
-                resolve(res);
+				resolve(res);
             }).catch((error) => {
                 reject(error);
             });
