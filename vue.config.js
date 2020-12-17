@@ -1,8 +1,8 @@
-const URL = process.env.URL || "http://localhost:8081/api";
+const API_URL = process.env.API_URL;
 
 module.exports = {
   transpileDependencies: ["vuetify"],
   devServer: {
-    proxy: URL,
+    proxy: API_URL,
   }
 }
