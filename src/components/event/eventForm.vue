@@ -115,13 +115,22 @@ export default {
   watch: {
     event: function () {
       if (this.event) {
+        const dateStart = this.format(new Date(this.event.startDate), 'yyyy-MM-dd');
+        const dateEnd = this.format(new Date(this.event.endDate), 'yyyy-MM-dd')
         this.formValues = {
+          id: this.event._id,
           name: this.event.name,
-          startDate: this.format(new Date(this.event.startDate), 'yyyy-MM-dd'),
-          endDate: this.format(new Date(this.event.endDate), 'yyyy-MM-dd'),
+          startDate: dateStart,
+          endDate: dateEnd,
           location: this.event.location,
           assigned_to: this.event.assigned_to,
         };
+        if (dateEnd) {
+          this.dates.push(dateEnd)
+        }
+        if (dateStart) {
+          this.dates.push(dateStart)
+        }
       }
     }
   },
@@ -145,7 +154,7 @@ export default {
               response = await this.createEvent(this.formValues);
             }
             else if (this.type === "Modify") {
-              response = await this.modifyEvent(this.event._id, this.formValues);
+              response = await this.modifyEvent(this.formValues);
             }
             if (response.status === 201) {
               this.$router.push({name: 'Calendar'});
@@ -154,9 +163,6 @@ export default {
           catch (e) {
             console.log(e);
           }
-        }
-        else {
-          this.$refs.form.console.error();
         }
       }
     },
