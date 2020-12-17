@@ -46,7 +46,7 @@
             @click="submit"
           >
             {{ type === "Create" ? "Ajouter la liste" : ''}}
-            {{ type === "Modify" ? "Modifier l'événement" : ''}}
+            {{ type === "Modify" ? "Modifier la liste" : ''}}
           </v-btn>
         </v-col>
         <v-col md="2" sm="2" xs="2">
