@@ -41,10 +41,10 @@
       <v-btn 
         v-if="!getExcludedActionRoute().some(route => route === $router.currentRoute.name)"
         color="secondary"
-        dark
+        :dark="true"
         :elevation="10"
         class="mb-15"
-        icon
+        fab
         :to="getActionAdd()"
       >
         <v-icon>mdi-plus</v-icon>

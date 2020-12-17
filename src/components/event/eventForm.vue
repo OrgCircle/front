@@ -42,6 +42,7 @@
           <v-date-picker
             v-model="dates"
             range
+            locale="fr"
           ></v-date-picker>
         </v-col>
       </v-row>
