@@ -47,11 +47,11 @@
         </v-card>
       </v-dialog>
     </div>
-    <div class="d-flex flex-md-wrap justify-space-between">
+    <div class="d-flex flex-column ">
       <v-card
         v-for="profile in getFamilyProfiles()"
         v-bind:key="profile._id"
-        class="pa-4"
+        class="pa-4 mb-2"
       >
         <h2>{{ profile.name }}</h2>
         <v-btn
