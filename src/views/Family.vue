@@ -1,9 +1,10 @@
 <template>
   <div>
     <div class="d-flex justify-space-between">
-      <h1>
-        {{ title }}
-      </h1>
+      <v-toolbar class="toolbar-center" flat>
+        <v-toolbar-title class="title">{{ title }}</v-toolbar-title>
+      </v-toolbar>
+      <v-divider></v-divider>
 
       <v-dialog v-model="dialog" width="500">
         <template v-slot:activator="{ on, attrs }">
@@ -108,4 +109,14 @@ export default {
 </script>
 
 <style scoped>
+.toolbar-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.title {
+  font-family: Avenir, Helvetica, Arial, sans-serif !important;
+  font-size: 1.75em !important;
+  text-align: center;
+}
 </style>
