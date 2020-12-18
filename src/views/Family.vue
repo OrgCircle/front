@@ -83,6 +83,7 @@ export default {
   methods: {
     ...mapGetters("auth", ["getProfile", "getFamily"]),
     ...mapActions("profile", ["createProfile", "deleteProfile"]),
+    ...mapActions("control", ['showPopup']),
     ...mapMutations("auth", ["SET_FAMILY"]),
     getFamilyProfiles() {
       const currentProfile = this.getProfile();
@@ -93,15 +94,26 @@ export default {
     },
     async handleSubmit(e) {
       e.preventDefault();
-      const family = await this.createProfile({
+      const response = await this.createProfile({
         name: this.newProfileName,
         password: this.newProfilePass,
       });
-      this.SET_FAMILY({ family });
+      if (response.status === 201) {
+        this.SET_FAMILY({ family: response.data });
+        this.showPopup({color: 'success', text: "Les profiles ont bien été mis à jours."})
+      }
+      else {
+        this.showPopup({color: 'danger', text: "Une erreur s'est produit durant la création de profile."})
+      }
     },
     async handleDelete(profileId) {
-      const family = await this.deleteProfile(profileId);
-      this.SET_FAMILY({ family });
+      const response = await this.deleteProfile(profileId);
+      if (response.status === 200) {
+        this.SET_FAMILY({ family: response.data });
+        this.showPopup({color: 'success', text: "Le profil a bien été supprimé."})
+      } else {
+        this.showPopup({color: 'danger', text: "Une erreur est survenue."})
+      }
     },
   },
 };

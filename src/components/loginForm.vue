@@ -71,6 +71,7 @@
             class="form-btn"
             color="#abc8e2"
             @click="submitConnexion"
+            :loading="loadingForm"
           >
             Connexion
           </v-btn>
@@ -105,17 +106,22 @@ export default {
       nameRules: [
         v => !!v || 'Le nom est requis.'
       ],
-      formValues: this.initEmptyForm()
+      formValues: this.initEmptyForm(),
+      loadingForm: false
     }
   },
   methods: {
     ...mapActions('auth', ['login']),
     async submitConnexion () {
+      this.loadingForm = true;
       if (this.$refs.form.validate()) {
         try {
           const response = await this.login(this.formValues);
+          this.loadingForm = false;
           if (response.status === 200) {
             this.$router.push({name: 'Dashboard'});
+          } else {
+            console.log(response)
           }
         }
         catch (e) {
