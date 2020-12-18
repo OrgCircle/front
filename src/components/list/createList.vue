@@ -26,11 +26,13 @@
           <v-select 
             label="Type de liste"
             v-model="formValues.listType"
-            :items="family.listType"
-            item-value="_id"
+            :items="listType"
+            :item-value="(type) => {
+              return {label: type.label,
+              icon: type.icon}
+            }"
             item-text="label"
             outline
-            multiple
           />
         </v-col>
       </v-row>
@@ -79,8 +81,8 @@ export default {
         v => !!v || 'Le nom est requis.'
       ],
       formValues: this.initEmptyForm(),
-      family: this.getFamily(),
-      list: this.getList()
+      list: this.getList(),
+      listType: []
     }
   },
   watch: {
@@ -93,10 +95,13 @@ export default {
       }
     }
   },
+  async beforeMount() {
+    await this.fetchListTypes()
+    this.listType = this.getListTypes()
+  },
   methods: {
-    ...mapActions('lists', ['createList', 'modifyList']),
-    ...mapGetters('auth', ['getFamily']),
-    ...mapGetters('lists', ['getList']),
+    ...mapActions('lists', ['createList', 'modifyList', 'fetchListTypes']),
+    ...mapGetters('lists', ['getList', 'getListTypes']),
     async submit () {
       if (this.$refs.form.validate()) {
         try {
@@ -107,7 +112,7 @@ export default {
           else if (this.type === "Modify") {
             response = await this.createList(this.list._id, this.formValues);
           }
-          if (response.status === 201) {
+          if (response.status === 200) {
             this.showPopup({color: 'success', text: "La liste a bien été ajouté."})
             this.$router.push({name: 'Lists'});
           } else {
