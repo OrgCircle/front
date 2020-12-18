@@ -13,7 +13,10 @@ export default {
     },
     getExcludedActionRoute(state) {
       return state.excludedActionRoute;
-    }
+    },
+    getPrevRoute(state) {
+      return state.prevRoute;
+    },
   },
 
   mutations: {

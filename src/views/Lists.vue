@@ -31,10 +31,12 @@ export default {
     ...mapActions('lists', ['fetchAllList']),
     ...mapGetters('lists', ['getAllList']),
     ...mapMutations('control', ['SET_ACTION_ADD']),
+    ...mapActions('control', ['setPreviousRoute']),
   },
   mounted (){
     this.fetchAllList(),
     this.SET_ACTION_ADD({name: 'AddList'});
+    this.setPreviousRoute('Dashboard');
   }
 }
 </script>

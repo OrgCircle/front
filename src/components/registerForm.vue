@@ -89,9 +89,11 @@
             />
           </v-col>
         </v-row>
-        <v-row>
+        <v-row class="row-btn">
           <v-col cols="6" sm="12" xs="12">
             <v-btn
+              class="form-btn"
+              color="#375D81"
               @click="submitInscription"
             >
               Inscription
@@ -154,3 +156,13 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+.row-btn{
+  justify-content: center;
+}
+
+.form-btn {
+  color: white;
+}
+</style>

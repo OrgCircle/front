@@ -16,6 +16,7 @@
 </template>
 <script>
 import EventForm from '@/components/event/eventForm';
+import { mapActions } from 'vuex';
 
 export default {
     name: 'ModifyEvent',
@@ -30,8 +31,12 @@ export default {
             return this.$route.params.eventId;
         }
     },
+    methods: {
+      ...mapActions('control', ['setPreviousRoute']),
+    },
     mounted() {
         this.event = this.$store.getters['event/getEventById'](this.eventId);
+        this.setPreviousRoute('/calendar');
     },
 }
 </script>
