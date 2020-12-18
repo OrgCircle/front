@@ -15,7 +15,8 @@
   </v-container>
 </template>
 <script>
-import EventForm from '@/components/event/eventForm'
+import EventForm from '@/components/event/eventForm';
+import { mapActions } from 'vuex';
 
 export default {
     name: 'AddEvent',
@@ -24,7 +25,13 @@ export default {
         return {
             title: 'Add event'
         }
-    }
+    },
+    methods: {
+      ...mapActions('control', ['setPreviousRoute']),
+    },
+    mounted() {
+        this.setPreviousRoute('/calendar');
+    },
 }
 </script>
 

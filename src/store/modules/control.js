@@ -16,18 +16,15 @@ export default {
     getExcludedActionRoute(state) {
       return state.excludedActionRoute;
     },
-<<<<<<< HEAD
     getPrevRoute(state) {
       return state.prevRoute;
     },
-=======
     getShowPopup(state) {
       return state.showPopup;
     },
     getPopup(state) {
       return state.popup;
     }
->>>>>>> ce95b406cc281f3b9953b430da97a73afd9e6a5d
   },
 
   mutations: {

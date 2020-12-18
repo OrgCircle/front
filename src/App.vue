@@ -7,7 +7,7 @@
         elevate-on-scroll
         scroll-target="#scrolling-techniques"
       >
-        <v-btn :to="getPrevRoute()" icon>
+        <v-btn v-if="getAuthenticated()" :to="getPrevRoute()" icon>
           <v-icon>mdi-chevron-left</v-icon>
         </v-btn>
         <v-toolbar-title v-if="getAuthenticated()" class="toolbar-title-center">Famille {{family ? family.name : ''}}</v-toolbar-title>
@@ -57,7 +57,7 @@
   </v-app>
 </template>
 <script>
-import { mapGetters } from 'vuex';
+import { mapGetters, mapActions } from 'vuex';
 export default {
   name: "app",
   data: function(){
@@ -66,17 +66,12 @@ export default {
     }
   },
   methods: {
-<<<<<<< HEAD
     ...mapGetters('auth', ['getAuthenticated', 'getFamily']),
     ...mapGetters('control', ['getActionAdd', 'getExcludedActionRoute', 'getPrevRoute']),
+    ...mapActions('control', ['setPreviousRoute']),
   },
   updated: function() {
     this.family = this.getFamily();
-=======
-    ...mapGetters('auth', ['getAuthenticated']),
-    ...mapGetters('control', ['getActionAdd', 'getExcludedActionRoute']),
-    ...mapActions('control', ['setPreviousRoute']),
->>>>>>> ce95b406cc281f3b9953b430da97a73afd9e6a5d
   }
 }
 </script>

@@ -83,7 +83,7 @@ export default {
   methods: {
     ...mapGetters("auth", ["getProfile", "getFamily"]),
     ...mapActions("profile", ["createProfile", "deleteProfile"]),
-    ...mapActions("control", ['showPopup']),
+    ...mapActions("control", ['showPopup', 'setPreviousRoute']),
     ...mapMutations("auth", ["SET_FAMILY"]),
     getFamilyProfiles() {
       const currentProfile = this.getProfile();
@@ -116,6 +116,9 @@ export default {
       }
     },
   },
+  mounted() {
+      this.setPreviousRoute('Dashboard');
+  }
 };
 </script>
 
