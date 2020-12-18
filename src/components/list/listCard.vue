@@ -1,16 +1,19 @@
 <template>
-  <div>
-      <v-card color="#ABC8E2" class="listCard">
-        <v-icon 
-          v-if="$store.state.auth.profil.role === 'ADMIN'"
-          @click="deleteListAction"
-        >
-          mdi-delete
-        </v-icon>
-        <v-card-text :to="{name: 'List', params: {id: cardId}}">
+  <div :class="$store.state.auth.profil.role === 'ADMIN' ? 'd-flex justify-center' : ''">
+      <v-card 
+        color="#ABC8E2" class="listCard flex-grow-1" :to="{name: 'List', params: {id: cardId}}"
+      >
+        <v-card-text>
           {{cardName}}
         </v-card-text>
       </v-card>
+      <v-icon 
+        v-if="$store.state.auth.profil.role === 'ADMIN'"
+        x-large
+        @click="deleteListAction"
+      >
+        mdi-delete
+      </v-icon>
   </div>
 </template>
 

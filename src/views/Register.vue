@@ -12,9 +12,17 @@
 
 <script>
 import RegisterForm from "@/components/registerForm";
+import { mapActions } from "vuex";
+
 export default {
   name: "Register",
   components: { RegisterForm },
+  mounted() {
+    this.setPreviousRoute('/')
+  },
+  methods: {
+    ...mapActions('control', ['setPreviousRoute']),
+  }
 };
 </script>
 

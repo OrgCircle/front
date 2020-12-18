@@ -102,6 +102,7 @@ export default {
   methods: {
     ...mapActions('lists', ['createList', 'modifyList', 'fetchListTypes']),
     ...mapGetters('lists', ['getList', 'getListTypes']),
+    ...mapActions("control", ['showPopup', 'setPreviousRoute']),
     async submit () {
       if (this.$refs.form.validate()) {
         try {

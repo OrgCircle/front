@@ -16,6 +16,7 @@
 </template>
 <script>
 import CreateList from '@/components/list/createList'
+import { mapActions } from 'vuex'
 
 export default {
     name: 'AddList',
@@ -24,6 +25,12 @@ export default {
         return {
             title: 'Add list'
         }
+    },
+    mounted() {
+      this.setPreviousRoute('/lists')
+    },
+    methods: {
+      ...mapActions('control', ['setPreviousRoute']),
     }
 }
 </script>

@@ -7,7 +7,8 @@
         elevate-on-scroll
         scroll-target="#scrolling-techniques"
       >
-        <v-btn v-if="getAuthenticated()" :to="getPrevRoute()" icon>
+
+        <v-btn v-if="!['Dashboard', 'Home'].some((routeName) => $router.currentRoute.name === routeName)" :to="getPrevRoute()" icon>
           <v-icon>mdi-chevron-left</v-icon>
         </v-btn>
         <v-toolbar-title v-if="getAuthenticated()" class="toolbar-title-center">Famille {{family ? family.name : ''}}</v-toolbar-title>
