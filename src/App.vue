@@ -52,7 +52,7 @@ export default {
   methods: {
     ...mapGetters('auth', ['getAuthenticated']),
     ...mapGetters('control', ['getActionAdd', 'getExcludedActionRoute']),
-    ...mapActions('control', ['getActionAdd', 'setPreviousRoute']),
+    ...mapActions('control', ['setPreviousRoute']),
   }
 }
 </script>

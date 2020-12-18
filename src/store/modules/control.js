@@ -3,7 +3,7 @@ export default {
 
   state: {
       actionAdd: null,
-      excludedActionRoute: ['Dashboard', 'List', 'AddList', 'AddEvent'],
+      excludedActionRoute: ['Dashboard', 'List', 'AddList', 'AddEvent', 'Family'],
       prevRoute: null
   },
 

@@ -4,20 +4,23 @@
       <v-toolbar class="toolbar-center" flat>
         <v-toolbar-title class="title">{{ title }}</v-toolbar-title>
       </v-toolbar>
-      <v-divider></v-divider>
-
-      <v-dialog v-model="dialog" width="500">
-        <template v-slot:activator="{ on, attrs }">
-          <v-btn
-            v-bind="attrs"
-            v-on="on"
-            class="my-auto"
-            v-if="profile.role === 'ADMIN'"
-            color="secondary"
-            >+ Add Profile
-          </v-btn>
-        </template>
-
+    </div>
+    <div class="d-flex flex-column">
+      <v-card
+        v-for="prof in getFamilyProfiles()"
+        v-bind:key="prof._id"
+        class="pa-4 mb-2"
+      >
+        <h2>{{ prof.name }}</h2>
+        <v-btn
+          color="red"
+          v-if="profile.role === 'ADMIN'"
+          class="white--text"
+          @click="handleDelete(prof._id)"
+          >Supprimer</v-btn
+        >
+      </v-card>
+       <v-dialog v-model="dialog" width="500">
         <v-card>
           <form @submit="handleSubmit" class="pa-3">
             <v-text-field
@@ -46,23 +49,19 @@
             </v-card-actions>
           </form>
         </v-card>
+        <template v-slot:activator="{ on, attrs }">
+          <v-btn
+            v-bind="attrs"
+            v-on="on"
+            class="my-auto white--text margin-auto"
+            v-if="profile.role === 'ADMIN'"
+            color="#375d81"
+            width="50%"
+            font
+            >+ Add Profile
+          </v-btn>
+        </template>
       </v-dialog>
-    </div>
-    <div class="d-flex flex-column">
-      <v-card
-        v-for="prof in getFamilyProfiles()"
-        v-bind:key="prof._id"
-        class="pa-4 mb-2"
-      >
-        <h2>{{ prof.name }}</h2>
-        <v-btn
-          color="red"
-          v-if="profile.role === 'ADMIN'"
-          class="white--text"
-          @click="handleDelete(prof._id)"
-          >Supprimer</v-btn
-        >
-      </v-card>
     </div>
   </div>
 </template>
