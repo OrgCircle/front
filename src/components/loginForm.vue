@@ -69,7 +69,7 @@
         <v-col md="6" sm="12" xs="12">
           <v-btn
             class="form-btn"
-            color="#abc8e2"
+            color="#375D81"
             @click="submitConnexion"
             :loading="loadingForm"
           >
@@ -81,7 +81,7 @@
         <v-col md="6" sm="12" xs="12">
           <v-btn 
           class="form-btn"
-          color="#abc8e2"
+          color="#375D81"
           :to="{name: 'Register'}">Inscription</v-btn>
         </v-col>
       </v-row>

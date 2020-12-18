@@ -54,9 +54,13 @@ export default {
     await this.fetchListbyId(this.listId)
     this.list = this.getList();
   },
+  mounted () {
+    this.setPreviousRoute('/lists');
+  },
   methods: {
     ...mapActions('lists', ['fetchListbyId', 'addTaskToList', 'modifyList', 'deleteTaskToList']),
     ...mapGetters('lists', ['getList']),
+    ...mapActions('control', ['setPreviousRoute']),
     ...mapActions("control", ['showPopup']),
     async addTask () {
       if (this.taskLabel) {

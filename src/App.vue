@@ -7,11 +7,10 @@
         elevate-on-scroll
         scroll-target="#scrolling-techniques"
       >
-        <v-btn v-if="getAuthenticated()" @click="setPreviousRoute()" icon>
+        <v-btn v-if="getAuthenticated()" :to="getPrevRoute()" icon>
           <v-icon>mdi-chevron-left</v-icon>
         </v-btn>
-        <v-toolbar-title>Circle</v-toolbar-title>
-        <v-spacer></v-spacer>
+        <v-toolbar-title v-if="getAuthenticated()" class="toolbar-title-center">Famille {{family ? family.name : ''}}</v-toolbar-title>
         <v-btn v-if="getAuthenticated()" to="/dashboard" icon>
           <v-icon>mdi-home</v-icon>
         </v-btn>
@@ -61,10 +60,18 @@
 import { mapGetters, mapActions } from 'vuex';
 export default {
   name: "app",
+  data: function(){
+    return{
+      family: ''
+    }
+  },
   methods: {
-    ...mapGetters('auth', ['getAuthenticated']),
-    ...mapGetters('control', ['getActionAdd', 'getExcludedActionRoute']),
+    ...mapGetters('auth', ['getAuthenticated', 'getFamily']),
+    ...mapGetters('control', ['getActionAdd', 'getExcludedActionRoute', 'getPrevRoute']),
     ...mapActions('control', ['setPreviousRoute']),
+  },
+  updated: function() {
+    this.family = this.getFamily();
   }
 }
 </script>
@@ -87,6 +94,10 @@ export default {
 
 .toolbar{
   position: fixed !important;
+}
+
+.toolbar-title-center{
+  margin: auto;
 }
 
 .plus-btn {

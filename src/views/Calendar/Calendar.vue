@@ -160,11 +160,13 @@ export default {
     await this.fetchEvents();
     this.SET_ACTION_ADD({name: 'AddEvent'});
     this.initEvents();
+    this.setPreviousRoute('Dashboard');
   },
   methods: {
     ...mapActions('event', ['fetchEvents', 'deleteEvent']),
     ...mapGetters('event', ['getEvents']),
     ...mapMutations('control', ['SET_ACTION_ADD']),
+    ...mapActions('control', ['setPreviousRoute']),
     initEvents() {
       const events = this.getEvents();
       if (events.length > 0) {
