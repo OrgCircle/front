@@ -7,7 +7,8 @@ export default {
 
   state: {
     allList: [],
-    list: null
+    list: null,
+    listTypes: []
   },
 
   getters: {
@@ -17,6 +18,9 @@ export default {
     getList(state) {
       return state.list;
     },
+    getListTypes(state) {
+      return state.listTypes;
+    }
   },
 
   mutations: {
@@ -37,6 +41,9 @@ export default {
       const listIndex = state.allList.findIndex(list => payload._id === list._id);
       state.allList[listIndex] = payload;
     },
+    SET_LIST_TYPES (state, payload) {
+      state.listTypes = payload
+    }
   },
 
   actions: {
@@ -100,5 +107,16 @@ export default {
         console.log(e);
       }
     },
+    async fetchListTypes({ commit }) {
+      try {
+        const response = await service.get(`/types`);
+        if (response.status === 200) {
+            commit('SET_LIST_TYPES', response.data)
+        }
+        return response;
+      } catch (e) {
+        console.log(e);
+      }
+    }
   }
 };

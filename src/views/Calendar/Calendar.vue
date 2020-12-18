@@ -169,7 +169,6 @@ export default {
     ...mapActions('control', ['setPreviousRoute']),
     initEvents() {
       const events = this.getEvents();
-      console.log(events)
       if (events.length > 0) {
         this.events = this.getEvents().map(event => {
           return {
@@ -182,7 +181,6 @@ export default {
       } else {
         this.events = [];
       }
-      console.log(this.events)
     },
     showModifyEvent() {
       this.$router.push({name: 'ModifyEvent', params: {eventId: this.selectedEvent.id}})

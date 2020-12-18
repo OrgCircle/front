@@ -73,6 +73,7 @@
         </v-col>
         <v-col md="2" sm="2" xs="2">
           <v-btn
+            :loading="loadingSubmit"
             @click="submit"
           >
             {{ type === "Create" ? "Ajouter l'événement" : ''}}
@@ -110,6 +111,7 @@ export default {
       ],
       formValues: this.initEmptyForm(),
       family: this.getFamily(),
+      loadingSubmit: false,
       format
     }
   },
@@ -137,9 +139,11 @@ export default {
   },
   methods: {
     ...mapActions('event', ['createEvent', 'modifyEvent']),
+    ...mapActions('control', ['showPopup']),
     ...mapGetters('auth', ['getFamily']),
     async submit () {
       if (this.$refs.form.validate()) {
+        this.loadingSubmit = true;
         if (this.dates.length > 0) {
           if (this.dates.length === 2) {
             this.dates.sort((dateA, dateB) => new Date(dateA) - new Date(dateB))
@@ -159,12 +163,16 @@ export default {
             }
             if (response.status === 201) {
               this.$router.push({name: 'Calendar'});
+              this.showPopup({color: 'success', text: "L'événement a bien été ajouté."})
+            } else {
+              this.showPopup({color: 'danger', text: "Une erreur est survenue."})
             }
           }
           catch (e) {
             console.log(e);
           }
         }
+        this.loadingSubmit = false;
       }
     },
     initEmptyForm () {

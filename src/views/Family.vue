@@ -4,20 +4,23 @@
       <v-toolbar class="toolbar-center" flat>
         <v-toolbar-title class="title">{{ title }}</v-toolbar-title>
       </v-toolbar>
-      <v-divider></v-divider>
-
-      <v-dialog v-model="dialog" width="500">
-        <template v-slot:activator="{ on, attrs }">
-          <v-btn
-            v-bind="attrs"
-            v-on="on"
-            class="my-auto"
-            v-if="profile.role === 'ADMIN'"
-            color="secondary"
-            >+ Add Profile
-          </v-btn>
-        </template>
-
+    </div>
+    <div class="d-flex flex-column">
+      <v-card
+        v-for="prof in getFamilyProfiles()"
+        v-bind:key="prof._id"
+        class="pa-4 mb-2"
+      >
+        <h2>{{ prof.name }}</h2>
+        <v-btn
+          color="red"
+          v-if="profile.role === 'ADMIN'"
+          class="white--text"
+          @click="handleDelete(prof._id)"
+          >Supprimer</v-btn
+        >
+      </v-card>
+       <v-dialog v-model="dialog" width="500">
         <v-card>
           <form @submit="handleSubmit" class="pa-3">
             <v-text-field
@@ -46,23 +49,19 @@
             </v-card-actions>
           </form>
         </v-card>
+        <template v-slot:activator="{ on, attrs }">
+          <v-btn
+            v-bind="attrs"
+            v-on="on"
+            class="my-auto white--text margin-auto"
+            v-if="profile.role === 'ADMIN'"
+            color="#375d81"
+            width="50%"
+            font
+            >+ Add Profile
+          </v-btn>
+        </template>
       </v-dialog>
-    </div>
-    <div class="d-flex flex-column">
-      <v-card
-        v-for="prof in getFamilyProfiles()"
-        v-bind:key="prof._id"
-        class="pa-4 mb-2"
-      >
-        <h2>{{ prof.name }}</h2>
-        <v-btn
-          color="red"
-          v-if="profile.role === 'ADMIN'"
-          class="white--text"
-          @click="handleDelete(prof._id)"
-          >Supprimer</v-btn
-        >
-      </v-card>
     </div>
   </div>
 </template>
@@ -84,6 +83,7 @@ export default {
   methods: {
     ...mapGetters("auth", ["getProfile", "getFamily"]),
     ...mapActions("profile", ["createProfile", "deleteProfile"]),
+    ...mapActions("control", ['showPopup']),
     ...mapMutations("auth", ["SET_FAMILY"]),
     getFamilyProfiles() {
       const currentProfile = this.getProfile();
@@ -94,15 +94,26 @@ export default {
     },
     async handleSubmit(e) {
       e.preventDefault();
-      const family = await this.createProfile({
+      const response = await this.createProfile({
         name: this.newProfileName,
         password: this.newProfilePass,
       });
-      this.SET_FAMILY({ family });
+      if (response.status === 201) {
+        this.SET_FAMILY({ family: response.data });
+        this.showPopup({color: 'success', text: "Les profiles ont bien été mis à jours."})
+      }
+      else {
+        this.showPopup({color: 'danger', text: "Une erreur s'est produit durant la création de profile."})
+      }
     },
     async handleDelete(profileId) {
-      const family = await this.deleteProfile(profileId);
-      this.SET_FAMILY({ family });
+      const response = await this.deleteProfile(profileId);
+      if (response.status === 200) {
+        this.SET_FAMILY({ family: response.data });
+        this.showPopup({color: 'success', text: "Le profil a bien été supprimé."})
+      } else {
+        this.showPopup({color: 'danger', text: "Une erreur est survenue."})
+      }
     },
   },
 };

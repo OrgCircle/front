@@ -9,7 +9,7 @@ export default {
     async createProfile(_, data) {
       try {
         const response = await service.post("/", undefined, data);
-        return response.data;
+        return response;
       } catch (e) {
         console.log(e);
         return null;
@@ -18,7 +18,7 @@ export default {
     async deleteProfile(_, data) {
       try {
         const response = await service.delete("/", data, undefined);
-        return response.data;
+        return response;
       } catch (e) {
         console.log(e);
         return null;

@@ -42,6 +42,18 @@
         <v-icon color="#375D81">mdi-plus</v-icon>
       </v-btn>
     </v-toolbar>
+    <v-snackbar
+      v-model="$store.state.control.showPopup"
+      :timeout="2500"
+      absolute
+      top
+      right
+      rounded="pill"
+      :color="$store.state.control.popup.color"
+      elevation-19
+    >
+      {{ $store.state.control.popup.text }}
+    </v-snackbar>
   </v-app>
 </template>
 <script>
@@ -54,11 +66,17 @@ export default {
     }
   },
   methods: {
+<<<<<<< HEAD
     ...mapGetters('auth', ['getAuthenticated', 'getFamily']),
     ...mapGetters('control', ['getActionAdd', 'getExcludedActionRoute', 'getPrevRoute']),
   },
   updated: function() {
     this.family = this.getFamily();
+=======
+    ...mapGetters('auth', ['getAuthenticated']),
+    ...mapGetters('control', ['getActionAdd', 'getExcludedActionRoute']),
+    ...mapActions('control', ['setPreviousRoute']),
+>>>>>>> ce95b406cc281f3b9953b430da97a73afd9e6a5d
   }
 }
 </script>

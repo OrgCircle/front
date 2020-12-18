@@ -9,7 +9,11 @@
     <v-list class='list-list'>
       <v-list-item-group>          
         <v-list-item>
-          <v-btn icon @click="addTask">
+          <v-btn 
+            icon 
+            @click="addTask"
+            :loading="loadingAddTask"
+          >
             <v-icon>mdi-plus</v-icon>
           </v-btn>
           <v-text-field label='Ajouter un élément' v-model="taskLabel"></v-text-field>
@@ -38,7 +42,7 @@ export default {
       taskLabel: '',
       list: null,
       selectedTask: null,
-      showModifyTaskModal: false
+      loadingAddTask: false
     }
   },
   computed: {
@@ -57,15 +61,22 @@ export default {
     ...mapActions('lists', ['fetchListbyId', 'addTaskToList', 'modifyList', 'deleteTaskToList']),
     ...mapGetters('lists', ['getList']),
     ...mapActions('control', ['setPreviousRoute']),
+    ...mapActions("control", ['showPopup']),
     async addTask () {
       if (this.taskLabel) {
+        this.loadingAddTask = true;
         try {
           const response = await this.addTaskToList({id: this.list._id, data: {label: this.taskLabel, state: false}});
+          this.loadingAddTask = false;
           if (response.status === 201) {
             this.list = response.data;
+            this.showPopup({color: 'success', text: "La tache a bien été ajouter dans la liste."})
+          }
+          else {
+            this.showPopup({color: 'danger', text: "Une erreur est survenue."})
           }
         } catch (e) {
-          console.log(e);
+          this.showPopup({color: 'danger', text: "Une erreur est survenue."})
         }
       }
     },
@@ -88,10 +99,13 @@ export default {
           taskId: task._id
         });
         if (response.status === 201) {
-          this.list = response.data
+          this.list = response.data;
+          this.showPopup({color: 'success', text: "La tache a bien été supprimé dans la liste."})
+        } else {
+          this.showPopup({color: 'danger', text: "Une erreur est survenue."})
         }
       } catch (e) {
-        console.log(e)
+        this.showPopup({color: 'danger', text: "Une erreur est survenue."})
       }
     }
   }
