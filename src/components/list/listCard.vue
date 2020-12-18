@@ -1,8 +1,22 @@
 <template>
-    <v-card color="#ABC8E2" :to="{name: 'List', params: {id: cardId}}" class="listCard">{{cardName}}</v-card>
+  <div>
+      <v-card color="#ABC8E2" class="listCard">
+        <v-icon 
+          v-if="$store.state.auth.profil.role === 'ADMIN'"
+          @click="deleteListAction"
+        >
+          mdi-delete
+        </v-icon>
+        <v-card-text :to="{name: 'List', params: {id: cardId}}">
+          {{cardName}}
+        </v-card-text>
+      </v-card>
+  </div>
 </template>
 
 <script>
+import { mapActions } from 'vuex'
+
 export default {
   name: 'ListCard',
   data: function () {
@@ -21,7 +35,26 @@ export default {
       required: true
     },
   },
-  methods: {},
+  methods: {
+    ...mapActions('lists', ['deleteList']),
+    ...mapActions("control", ['showPopup']),
+    async deleteListAction () {
+      try {
+        const response = await this.deleteList({
+          id: this.cardId
+        });
+        if (response.status === 201) {
+          this.list = response.data;
+          this.showPopup({color: 'success', text: "La tache a bien été supprimé dans la liste."})
+        } else {
+          this.showPopup({color: 'danger', text: "Une erreur est survenue."})
+        }
+      } catch (e) {
+        console.log(e)
+        this.showPopup({color: 'danger', text: "Une erreur est survenue."})
+      }
+    }
+  },
 }
 </script>
 

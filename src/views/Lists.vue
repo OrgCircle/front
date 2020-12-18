@@ -5,7 +5,7 @@
     </v-toolbar>
     <v-divider></v-divider>
     <v-row v-for="list in lists" :key="list._id">
-      <v-col><ListCard :cardId='list._id' :cardName='list.name'></ListCard></v-col>
+      <v-col md="4" sm="8" xs="10" class="margin-auto"><ListCard :cardId='list._id' :cardName='list.name'></ListCard></v-col>
     </v-row>
   </div>
 </template>
