@@ -108,11 +108,14 @@ export default {
             response = await this.createList(this.list._id, this.formValues);
           }
           if (response.status === 201) {
+            this.showPopup({color: 'success', text: "La liste a bien été ajouté."})
             this.$router.push({name: 'Lists'});
+          } else {
+            this.showPopup({color: 'danger', text: "Une erreur est survenue."})
           }
         }
         catch (e) {
-          console.log(e);
+          this.showPopup({color: 'danger', text: "Une erreur est survenue."})
         }
       } else {
         this.$refs.form.console.error();

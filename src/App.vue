@@ -43,6 +43,18 @@
         <v-icon color="#375D81">mdi-plus</v-icon>
       </v-btn>
     </v-toolbar>
+    <v-snackbar
+      v-model="$store.state.control.showPopup"
+      :timeout="2500"
+      absolute
+      top
+      right
+      rounded="pill"
+      :color="$store.state.control.popup.color"
+      elevation-19
+    >
+      {{ $store.state.control.popup.text }}
+    </v-snackbar>
   </v-app>
 </template>
 <script>

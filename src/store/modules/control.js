@@ -4,7 +4,9 @@ export default {
   state: {
       actionAdd: null,
       excludedActionRoute: ['Dashboard', 'List', 'AddList', 'AddEvent', 'Family'],
-      prevRoute: null
+      prevRoute: null,
+      showPopup: false,
+      popup: {text: '', color: 'primary'}
   },
 
   getters: {
@@ -13,6 +15,12 @@ export default {
     },
     getExcludedActionRoute(state) {
       return state.excludedActionRoute;
+    },
+    getShowPopup(state) {
+      return state.showPopup;
+    },
+    getPopup(state) {
+      return state.popup;
     }
   },
 
@@ -23,6 +31,16 @@ export default {
     SET_PREV_ROUTE (state, payload) {
       state.prevRoute = payload;
     },
+    SET_SHOW_POPUP (state, payload) {
+      state.showPopup = payload
+    },
+    SET_POPUP (state, payload) {
+      if (payload.color) {
+        state.popup = payload
+      } else {
+        state.popup = {text: payload.text, color: 'primary'}
+      }
+    }
   },
 
   actions: {
@@ -32,6 +50,10 @@ export default {
       }catch (e) {
         console.log(e)
       }
+    },
+    showPopup({ commit }, {color, text}) {
+      commit('SET_SHOW_POPUP', true)
+      commit('SET_POPUP', {color, text})
     }
   }
 };

@@ -93,6 +93,7 @@
           <v-col cols="6" sm="12" xs="12">
             <v-btn
               @click="submitInscription"
+              :loading="loadingForm"
             >
               Inscription
             </v-btn>
@@ -124,17 +125,22 @@ export default {
           v => !!v || 'Le nom est requis.',
           v => v.length > 1 || 'Le nom de famille est trop court.'
         ],
-        formValues: this.initEmptyForm()
+        formValues: this.initEmptyForm(),
+        loadingForm: false
       };
   },
   methods: {
     ...mapActions('auth', ['register']),
     async submitInscription () {
+      this.loadingForm = true;
       if (this.$refs.form.validate()) {
         try {
           const response = await this.register(this.formValues);
+          this.loadingForm = true;
           if (response.status === 200) {
             this.$router.push({name: 'Home'});
+          } else {
+            console.log(response)
           }
         }
         catch (e) {
