@@ -74,6 +74,18 @@ export default {
           console.log(e);
       }
     },
+    async deleteList({ actions }, data) {
+      try {
+        console.log(data);
+        const response = await service.delete(`/${data.id}`, '', data);
+        if (response.status === 204) {
+            actions.fetchAllList();
+        }
+        return response;
+      } catch (e) {
+        console.log(e);
+      }
+    },
     async modifyList({ commit }, data) {
       try {
         const response = await service.patch(`/${data._id}`, '', data);
