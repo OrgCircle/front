@@ -117,11 +117,11 @@ export default {
             this.showPopup({color: 'success', text: "La liste a bien été ajouté."})
             this.$router.push({name: 'Lists'});
           } else {
-            this.showPopup({color: 'danger', text: "Une erreur est survenue."})
+            this.showPopup({color: 'red', text: "Une erreur est survenue."})
           }
         }
         catch (e) {
-          this.showPopup({color: 'danger', text: "Une erreur est survenue."})
+          this.showPopup({color: 'red', text: "Une erreur est survenue."})
         }
       } else {
         this.$refs.form.console.error();

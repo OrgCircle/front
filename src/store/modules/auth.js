@@ -37,7 +37,7 @@ export default {
       if (state.profil !== null) state.isAuthenticated = true;
     },
     DISCONNECT(state) {
-      localStorage.clear();
+      localStorage.removeItem("jwt");
       state.isAuthenticated = false;
     },
   },
@@ -69,5 +69,8 @@ export default {
       if (response.status === 201) commit("ABLE_CREATE_FAMILY");
       return response;
     },
+    disconnect({ commit }) {
+      commit("DISCONNECT");
+    }
   },
 };

@@ -103,7 +103,7 @@ export default {
         this.showPopup({color: 'success', text: "Les profiles ont bien été mis à jours."})
       }
       else {
-        this.showPopup({color: 'danger', text: "Une erreur s'est produit durant la création de profile."})
+        this.showPopup({color: 'red', text: "Une erreur s'est produit durant la création de profile."})
       }
     },
     async handleDelete(profileId) {
@@ -112,7 +112,7 @@ export default {
         this.SET_FAMILY({ family: response.data });
         this.showPopup({color: 'success', text: "Le profil a bien été supprimé."})
       } else {
-        this.showPopup({color: 'danger', text: "Une erreur est survenue."})
+        this.showPopup({color: 'red', text: "Une erreur est survenue."})
       }
     },
   },

@@ -112,20 +112,23 @@ export default {
   },
   methods: {
     ...mapActions('auth', ['login']),
+    ...mapActions('control', ['showPopup']),
     async submitConnexion () {
-      this.loadingForm = true;
       if (this.$refs.form.validate()) {
+        this.loadingForm = true;
         try {
           const response = await this.login(this.formValues);
           this.loadingForm = false;
           if (response.status === 200) {
+            this.showPopup({color: 'success', text: "Vous êtes bien connecté."})
             this.$router.push({name: 'Dashboard'});
           } else {
-            console.log(response)
+            this.showPopup({color: 'red', text: "Une erreur est survenue."})
           }
         }
         catch (e) {
-          console.log(e);
+          this.loadingForm = false;
+          this.showPopup({color: 'red', text: "Une erreur est survenue."})
         }
       }
     },

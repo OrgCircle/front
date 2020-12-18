@@ -165,7 +165,7 @@ export default {
               this.$router.push({name: 'Calendar'});
               this.showPopup({color: 'success', text: "L'événement a bien été ajouté."})
             } else {
-              this.showPopup({color: 'danger', text: "Une erreur est survenue."})
+              this.showPopup({color: 'red', text: "Une erreur est survenue."})
             }
           }
           catch (e) {

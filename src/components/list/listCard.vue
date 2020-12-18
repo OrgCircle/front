@@ -50,11 +50,11 @@ export default {
           this.list = response.data;
           this.showPopup({color: 'success', text: "La tache a bien été supprimé dans la liste."})
         } else {
-          this.showPopup({color: 'danger', text: "Une erreur est survenue."})
+          this.showPopup({color: 'red', text: "Une erreur est survenue."})
         }
       } catch (e) {
         console.log(e)
-        this.showPopup({color: 'danger', text: "Une erreur est survenue."})
+        this.showPopup({color: 'red', text: "Une erreur est survenue."})
       }
     }
   },

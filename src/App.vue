@@ -7,11 +7,13 @@
         elevate-on-scroll
         scroll-target="#scrolling-techniques"
       >
-
         <v-btn v-if="!['Dashboard', 'Home'].some((routeName) => $router.currentRoute.name === routeName)" :to="getPrevRoute()" icon>
           <v-icon>mdi-chevron-left</v-icon>
         </v-btn>
         <v-toolbar-title v-if="getAuthenticated()" class="toolbar-title-center">Famille {{family ? family.name : ''}}</v-toolbar-title>
+        <v-btn v-if="getAuthenticated()" @click="disconnectAction" icon>
+          <v-icon>mdi-logout</v-icon>
+        </v-btn>
         <v-btn v-if="getAuthenticated()" to="/dashboard" icon>
           <v-icon>mdi-home</v-icon>
         </v-btn>
@@ -70,6 +72,11 @@ export default {
     ...mapGetters('auth', ['getAuthenticated', 'getFamily']),
     ...mapGetters('control', ['getActionAdd', 'getExcludedActionRoute', 'getPrevRoute']),
     ...mapActions('control', ['setPreviousRoute']),
+    ...mapActions('auth', ['disconnect']),
+    disconnectAction () {
+      this.disconnect();
+      this.$router.push({name: 'Home'})
+    }
   },
   updated: function() {
     this.family = this.getFamily();

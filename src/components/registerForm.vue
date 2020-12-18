@@ -133,20 +133,23 @@ export default {
   },
   methods: {
     ...mapActions('auth', ['register']),
+    ...mapActions('control', ['showPopup']),
     async submitInscription () {
-      this.loadingForm = true;
       if (this.$refs.form.validate()) {
+       this.loadingForm = true;
         try {
           const response = await this.register(this.formValues);
-          this.loadingForm = true;
+          this.loadingForm = false;
           if (response.status === 200) {
+            this.showPopup({color: 'success', text: "Vous êtes bien inscrit."})
             this.$router.push({name: 'Home'});
           } else {
-            console.log(response)
+            this.showPopup({color: 'red', text: "Une erreur est survenue."})
           }
         }
         catch (e) {
-          console.log(e);
+          this.loadingForm = false;
+          this.showPopup({color: 'red', text: "Une erreur est survenue."})
         }
       }
     },
