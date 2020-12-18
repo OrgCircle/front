@@ -46,8 +46,8 @@ export default {
         const response = await this.deleteList({
           id: this.cardId
         });
-        if (response.status === 201) {
-          this.list = response.data;
+        if (response.status === 204) {
+          this.$emit("updateLists");
           this.showPopup({color: 'success', text: "La tache a bien été supprimé dans la liste."})
         } else {
           this.showPopup({color: 'red', text: "Une erreur est survenue."})

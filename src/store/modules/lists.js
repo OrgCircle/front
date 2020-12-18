@@ -74,12 +74,11 @@ export default {
           console.log(e);
       }
     },
-    async deleteList({ actions }, data) {
+    async deleteList({ dispatch }, data) {
       try {
-        console.log(data);
         const response = await service.delete(`/${data.id}`, '', data);
         if (response.status === 204) {
-            actions.fetchAllList();
+          dispatch('fetchAllList');
         }
         return response;
       } catch (e) {

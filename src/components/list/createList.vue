@@ -113,7 +113,7 @@ export default {
           else if (this.type === "Modify") {
             response = await this.createList(this.list._id, this.formValues);
           }
-          if (response.status === 200) {
+          if (response.status === 201) {
             this.showPopup({color: 'success', text: "La liste a bien été ajouté."})
             this.$router.push({name: 'Lists'});
           } else {

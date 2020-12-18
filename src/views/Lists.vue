@@ -5,7 +5,7 @@
     </v-toolbar>
     <v-divider></v-divider>
     <v-row v-for="list in lists" :key="list._id">
-      <v-col md="4" sm="8" xs="10" class="margin-auto"><ListCard :cardId='list._id' :cardName='list.name'></ListCard></v-col>
+      <v-col md="4" sm="8" xs="10" class="margin-auto"><ListCard :cardId='list._id' :cardName='list.name' @updateLists="reinitialiseLists"></ListCard></v-col>
     </v-row>
   </div>
 </template>
@@ -19,25 +19,24 @@ export default {
   components: { ListCard },
   data: function (){
     return {
-      
+      lists: []
     }
   },
-  computed: {
-    lists : function() {
-      return this.getAllList();
-    }
+  async mounted (){
+    await this.reinitialiseLists();
+    this.SET_ACTION_ADD({name: 'AddList'});
+    this.setPreviousRoute('Dashboard');
   },
   methods: {
     ...mapActions('lists', ['fetchAllList']),
     ...mapGetters('lists', ['getAllList']),
     ...mapMutations('control', ['SET_ACTION_ADD']),
     ...mapActions('control', ['setPreviousRoute']),
+    async reinitialiseLists() {
+      await this.fetchAllList(),
+      this.lists = this.getAllList();
+    }
   },
-  mounted (){
-    this.fetchAllList(),
-    this.SET_ACTION_ADD({name: 'AddList'});
-    this.setPreviousRoute('Dashboard');
-  }
 }
 </script>
 
