@@ -9,7 +9,7 @@
     "start": "serve -s dist"
   },
   "dependencies": {
-    "axios": "^0.21.0",
+    "axios": "^0.21.1",
     "console": "^0.7.2",
     "core-js": "^3.6.5",
     "date-fns": "^2.16.1",
